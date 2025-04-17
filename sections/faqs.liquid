@@ -1,0 +1,328 @@
+{% comment %}
+  FAQ Section
+  A collapsible FAQ section with customizable questions and answers
+{% endcomment %}
+
+<section class="faqs-section section-{{ section.id }}-padding" style="">
+  <div class="page-width">
+    <div class="faqs-header">
+      {% if section.settings.title != blank %}
+        <h2 class="faqs-title">{{ section.settings.title }}</h2>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="faqs-subtext">{{ section.settings.subtext }}</div>
+      {% endif %}
+    </div>
+
+    <div class="faqs-container">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-number">{{ forloop.index | prepend: '0' }}.</span>
+            <span class="faq-question-text">{{ block.settings.question }}</span>
+            <span class="faq-icon">
+              <svg
+                class="icon-plus"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M8 0V16" stroke="currentColor" stroke-width="2"/>
+                <path d="M0 8H16" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer" hidden>
+            <div class="faq-answer-content">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach((question) => {
+      question.addEventListener('click', function () {
+        const answer = this.nextElementSibling;
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+
+        // Toggle current FAQ
+        this.setAttribute('aria-expanded', !isExpanded);
+        answer.hidden = isExpanded;
+
+        // Optional: Close other FAQs when opening a new one
+        if (!isExpanded) {
+          faqQuestions.forEach((otherQuestion) => {
+            if (otherQuestion !== question) {
+              otherQuestion.setAttribute('aria-expanded', 'false');
+              otherQuestion.nextElementSibling.hidden = true;
+            }
+          });
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .faqs-section {
+    /* padding-top: 60px;
+    padding-bottom: 60px; */
+    /* background-color: #f9f9f9; */
+  }
+
+  .section-{{ section.id }}-padding{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media (max-width: 1010px){
+    .section-{{ section.id }}-padding{
+      padding-top: calc({{ section.settings.padding_top }}px / 2);
+      padding-bottom: calc({{ section.settings.padding_bottom }}px / 2);
+    }
+  }
+
+  .faqs-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .faqs-title {
+    font-size: 32px;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
+  .faqs-subtext {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .faqs-container {
+    /* max-width: 900px; */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 5rem;
+    row-gap: 0;
+    max-width: 1200px;
+    background-color: {{ section.settings.background_color }};
+    padding: 6rem 6rem;
+    border-radius: 2rem;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #666;
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    padding: 20px 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .faq-question:hover {
+    color: #555;
+  }
+
+  .faq-number {
+    margin-right: 15px;
+    /* font-weight: 600; */
+    min-width: 40px;
+  }
+
+  .faq-question-text {
+    flex-grow: 1;
+  }
+
+  .faq-icon {
+    margin-left: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-question[aria-expanded="true"] .faq-icon .icon-plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    padding: 0 0 20px 55px;
+  }
+
+  .faq-answer-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  @media screen and (max-width: 749px) {
+    .faqs-title {
+      font-size: 28px;
+    }
+
+    .faqs-container {
+      grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+      font-size: 16px;
+    }
+
+    .faq-number {
+      min-width: 30px;
+    }
+
+    .faq-answer {
+      padding-left: 45px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "FAQs v2",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>Of course! Here's a well-structured FAQ section for your homepage, with a friendly headline, a helpful subtext, and clear, trust-building FAQs</p>"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is DollarWoofClub.com?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>DollarWoofClub.com is a membership-based online store that offers high-quality pet products at deeply discounted prices. We source limited quantities of premium pet gear and pass the savings directly to our members.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs v2",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What is DollarWoofClub.com?",
+            "answer": "<p>DollarWoofClub.com is a membership-based online store that offers high-quality pet products at deeply discounted prices. We source limited quantities of premium pet gear and pass the savings directly to our members.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why are the prices so low?",
+            "answer": "<p>We work directly with manufacturers and brands to secure limited quantities of premium products at exceptional prices. By operating on a membership model, we can offer these exclusive deals to our community.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is everything brand new?",
+            "answer": "<p>Yes! All products are 100% authentic, brand new, and come with original packaging and manufacturer warranties where applicable.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What kinds of products do you sell?",
+            "answer": "<p>We offer a wide range of premium pet products including toys, treats, accessories, grooming supplies, and innovative gear for dogs of all sizes. Our inventory rotates regularly as we secure new deals.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What happens when something sells out?",
+            "answer": "<p>Once an item sells out, it's gone! We operate on a 'here today, gone tomorrow' model with limited quantities. We recommend joining our email list to be first to know when new products drop.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship everywhere?",
+            "answer": "<p>We currently ship to all 50 US states. International shipping is not available at this time, but we're working on expanding our reach!</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I return an item?",
+            "answer": "<p>Yes, we offer a 30-day satisfaction guarantee. If you're not completely satisfied with your purchase, please contact our customer service team for return instructions.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Still have questions?",
+            "answer": "<p>We're here to help! Contact our customer service team at support@dollarwoofclub.com or call us at (800) 123-4567 during business hours.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

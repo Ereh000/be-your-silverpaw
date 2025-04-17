@@ -1,0 +1,751 @@
+<div class="header-v2 page-width" data-section-id="{{ section.id }}" data-section-type="header">
+  <div class="header-v2__top">
+    <!-- Search -->
+    <div class="header-v2__search-container">
+      <button type="button" class="header-v2__search-toggle" aria-expanded="false" aria-controls="SearchDrawer">
+        <span class="visually-hidden">{{ 'general.search.search' | t }}</span>
+        <svg aria-hidden="true" focusable="false" class="icon icon-search" viewBox="0 0 24 24">
+          <path d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.39zM11 18a7 7 0 1 1 7-7 7 7 0 0 1-7 7z"/>
+        </svg>
+        <span class="header-v2__search-text">{{ 'general.search.search' | t }}</span>
+      </button>
+      <div id="SearchDrawer" class="header-v2__search-drawer">
+        <div class="header-v2__search-form-wrapper">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="header-v2__search-form">
+            <div class="header-v2__search-input-wrapper">
+              <input
+                type="search"
+                name="q"
+                placeholder="{{ 'general.search.placeholder' | t }}"
+                class="header-v2__search-input"
+                aria-label="{{ 'general.search.placeholder' | t }}"
+                autocomplete="off"
+              >
+              <button type="submit" class="header-v2__search-submit">
+                <span class="visually-hidden">{{ 'general.search.submit' | t }}</span>
+                <svg aria-hidden="true" focusable="false" class="icon icon-search" viewBox="0 0 24 24">
+                  <path d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.39zM11 18a7 7 0 1 1 7-7 7 7 0 0 1-7 7z"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+          <button type="button" class="header-v2__search-close" aria-label="{{ 'general.search.close' | t }}">
+            <svg aria-hidden="true" focusable="false" class="icon icon-close" viewBox="0 0 24 24">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="header-v2__logo-container">
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}" class="header-v2__logo-link">
+          {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+          {%- assign logo_width = section.settings.logo_width | default: 100 -%}
+          {%- assign logo_height = section.settings.logo.height
+            | divided_by: section.settings.logo.width
+            | times: logo_width
+            | round
+          -%}
+          {{
+            section.settings.logo
+            | image_url: width: section.settings.logo.width
+            | image_tag:
+              class: 'header-v2__logo',
+              widths: '50, 100, 150, 200, 250, 300, 400, 500',
+              height: logo_height,
+              width: logo_width,
+              alt: logo_alt,
+              loading: 'eager'
+          }}
+        </a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="header-v2__logo-link header-v2__logo-text">
+          {{ shop.name }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Cart and Language -->
+    <div class="header-v2__actions">
+      {%- if section.settings.show_language_selector -%}
+        <div class="header-v2__localization">
+          {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+            <div class="localization-form__select">
+              <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'country selector' }}</h2>
+              <select class="localization-selector link" name="country_code" aria-labelledby="HeaderCountryLabel">
+                {%- for country in localization.available_countries -%}
+                  <option
+                    value="{{ country.iso_code }}"
+                    {%- if country.iso_code == localization.country.iso_code %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ country.name }} ({{ country.iso_code }})
+                  </option>
+                {%- endfor -%}
+              </select>
+              <svg aria-hidden="true" focusable="false" class="icon icon-caret" viewBox="0 0 10 6">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+              </svg>
+            </div>
+            <button class="button button--tertiary visually-hidden" aria-label="{{ 'general.country.update' | t }}">
+              {{ 'general.country.update' | t }}
+            </button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="header-v2__cart-link">
+        <svg aria-hidden="true" focusable="false" class="icon icon-cart" viewBox="0 0 24 24">
+          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+        <span class="header-v2__cart-count">{{ cart.item_count }}</span>
+        <span class="header-v2__cart-text">Cart</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="header-v2__navigation">
+    <nav class="header-v2__nav" role="navigation">
+      <ul class="header-v2__menu list-unstyled">
+        {%- for link in section.settings.menu.links -%}
+          <li class="header-v2__menu-item{% if link.links.size > 0 %} header-v2__menu-item--has-submenu{% endif %}">
+            <a
+              href="{{ link.url }}"
+              class="header-v2__menu-link{% if link.active %} header-v2__menu-link--active{% endif %}"
+            >
+              {{ link.title }}
+              {%- if link.links.size > 0 -%}
+                <svg aria-hidden="true" focusable="false" class="icon icon-chevron-down" viewBox="0 0 24 24">
+                  <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                </svg>
+              {%- endif -%}
+            </a>
+            {%- if link.links.size > 0 -%}
+              <ul class="header-v2__submenu list-unstyled">
+                {%- for childlink in link.links -%}
+                  <li class="header-v2__submenu-item">
+                    <a
+                      href="{{ childlink.url }}"
+                      class="header-v2__submenu-link{% if childlink.active %} header-v2__submenu-link--active{% endif %}"
+                    >
+                      {{ childlink.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Mobile menu toggle -->
+  <button type="button" class="header-v2__mobile-toggle" aria-expanded="false" aria-controls="MobileNav">
+    <span class="visually-hidden">{{ 'general.navigation.menu' | t }}</span>
+    <svg aria-hidden="true" focusable="false" class="icon icon-hamburger" viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </button>
+
+  <!-- Mobile menu -->
+  <div id="MobileNav" class="header-v2__mobile-nav">
+    <div class="header-v2__mobile-nav-inner">
+      <button type="button" class="header-v2__mobile-close" aria-label="{{ 'general.navigation.close_menu' | t }}">
+        <svg aria-hidden="true" focusable="false" class="icon icon-close" viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <nav class="header-v2__mobile-menu" role="navigation">
+        <ul class="header-v2__mobile-menu-list list-unstyled">
+          {%- for link in section.settings.menu.links -%}
+            <li class="header-v2__mobile-menu-item{% if link.links.size > 0 %} header-v2__mobile-menu-item--has-submenu{% endif %}">
+              <a
+                href="{{ link.url }}"
+                class="header-v2__mobile-menu-link{% if link.active %} header-v2__mobile-menu-link--active{% endif %}"
+              >
+                {{ link.title }}
+              </a>
+              {%- if link.links.size > 0 -%}
+                <button class="header-v2__mobile-submenu-toggle" aria-expanded="false">
+                  <span class="visually-hidden">{{ 'general.navigation.expand_submenu' | t }}</span>
+                  <svg aria-hidden="true" focusable="false" class="icon icon-plus" viewBox="0 0 24 24">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  </svg>
+                </button>
+                <ul class="header-v2__mobile-submenu list-unstyled">
+                  {%- for childlink in link.links -%}
+                    <li class="header-v2__mobile-submenu-item">
+                      <a
+                        href="{{ childlink.url }}"
+                        class="header-v2__mobile-submenu-link{% if childlink.active %} header-v2__mobile-submenu-link--active{% endif %}"
+                      >
+                        {{ childlink.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<style>
+  .header-v2 {
+    position: relative;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .header-v2__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  /* Logo */
+  .header-v2__logo-container {
+    text-align: center;
+  }
+
+  .header-v2__logo {
+    max-width: {{ section.settings.logo_width }}px;
+    display: block;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .header-v2__logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    color: {{ section.settings.heading_color }};
+  }
+
+  /* Search */
+  .header-v2__search-container {
+    position: relative;
+  }
+
+  .header-v2__search-toggle {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: {{ section.settings.text_color }};
+  }
+
+  .header-v2__search-text {
+    margin-left: 5px;
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-v2__search-text {
+      display: inline-block;
+    }
+  }
+
+  .header-v2__search-drawer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    background: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+  }
+
+  .header-v2__search-drawer.active {
+    display: block;
+  }
+
+  .header-v2__search-form-wrapper {
+    position: relative;
+  }
+
+  .header-v2__search-form {
+    display: flex;
+  }
+
+  .header-v2__search-input-wrapper {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .header-v2__search-input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .header-v2__search-submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: none;
+    border: none;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  .header-v2__search-close {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  /* Actions (Cart and Language) */
+  .header-v2__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-v2__localization {
+    margin-right: 20px;
+  }
+
+  .header-v2 .localization-form__select {
+    position: relative;
+  }
+
+  .header-v2 .localization-selector {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding-right: 15px;
+    cursor: pointer;
+    color: {{ section.settings.text_color }};
+  }
+
+  .header-v2 .icon-caret {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 6px;
+    pointer-events: none;
+  }
+
+  .header-v2__cart-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    position: relative;
+  }
+
+  .header-v2__cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: {{ section.settings.accent_color }};
+    color: #fff;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-v2__cart-text {
+    margin-left: 5px;
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-v2__cart-text {
+      display: inline-block;
+    }
+  }
+
+  /* Navigation */
+  .header-v2__navigation {
+    border-top: 1px solid {{ section.settings.border_color }};
+    padding-top: 15px;
+  }
+
+  .header-v2__menu {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-v2__menu-item {
+    position: relative;
+    margin: 0 15px;
+  }
+
+  .header-v2__menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    padding: 5px 0;
+    font-weight: 500;
+  }
+
+  .header-v2__menu-link--active {
+  }
+
+  .header-v2 .icon-chevron-down {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+  }
+
+  .header-v2__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 10;
+    display: none;
+  }
+
+  .header-v2__menu-item:hover .header-v2__submenu {
+    display: block;
+  }
+
+  .header-v2__submenu-item {
+    padding: 0 15px;
+  }
+
+  .header-v2__submenu-link {
+    display: block;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    padding: 8px 0;
+  }
+
+  .header-v2__submenu-link--active {
+    color: {{ section.settings.accent_color }};
+  }
+
+  /* Mobile menu */
+  .header-v2__mobile-toggle {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  .header-v2__mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    background: #fff;
+    z-index: 100;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .header-v2__mobile-nav.active {
+    transform: translateX(0);
+  }
+
+  .header-v2__mobile-nav-inner {
+    padding: 20px;
+  }
+
+  .header-v2__mobile-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .header-v2__mobile-menu-list {
+    margin: 30px 0 0;
+    padding: 0;
+  }
+
+  .header-v2__mobile-menu-item {
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .header-v2__mobile-menu-link {
+    display: block;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    padding: 10px 0;
+    font-weight: 500;
+  }
+
+  .header-v2__mobile-menu-link--active {
+    color: {{ section.settings.accent_color }};
+  }
+
+  .header-v2__mobile-submenu-toggle {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .header-v2__mobile-submenu {
+    display: none;
+    margin: 0;
+    padding: 0 0 0 15px;
+  }
+
+  .header-v2__mobile-submenu.active {
+    display: block;
+  }
+
+  .header-v2__mobile-submenu-item {
+    margin-bottom: 5px;
+  }
+
+  .header-v2__mobile-submenu-link {
+    display: block;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    padding: 8px 0;
+  }
+
+  .header-v2__mobile-submenu-link--active {
+    color: {{ section.settings.accent_color }};
+  }
+
+  .header-v2 .list-unstyled {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-v2 .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .header-v2 .icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  .header-v2 .localization-form__select .icon-caret {
+    width: 12px !important;
+  }
+
+  a.header-v2__menu-link.header-v2__menu-link--active:after{
+    content: '';
+    height: 2px;
+    width: 120%;
+    background: #000;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 989px) {
+    .header-v2__navigation {
+      display: none;
+    }
+
+    .header-v2__mobile-toggle {
+      display: block;
+    }
+
+    .header-v2__mobile-nav {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Search toggle
+    const searchToggle = document.querySelector('.header-v2__search-toggle');
+    const searchDrawer = document.querySelector('.header-v2__search-drawer');
+    const searchClose = document.querySelector('.header-v2__search-close');
+
+    if (searchToggle && searchDrawer && searchClose) {
+      searchToggle.addEventListener('click', function () {
+        searchDrawer.classList.toggle('active');
+        searchToggle.setAttribute('aria-expanded', searchDrawer.classList.contains('active'));
+      });
+
+      searchClose.addEventListener('click', function () {
+        searchDrawer.classList.remove('active');
+        searchToggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    // Mobile menu
+    const mobileToggle = document.querySelector('.header-v2__mobile-toggle');
+    const mobileNav = document.querySelector('.header-v2__mobile-nav');
+    const mobileClose = document.querySelector('.header-v2__mobile-close');
+    const submenuToggles = document.querySelectorAll('.header-v2__mobile-submenu-toggle');
+
+    if (mobileToggle && mobileNav && mobileClose) {
+      mobileToggle.addEventListener('click', function () {
+        mobileNav.classList.add('active');
+        mobileToggle.setAttribute('aria-expanded', 'true');
+      });
+
+      mobileClose.addEventListener('click', function () {
+        mobileNav.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    if (submenuToggles.length > 0) {
+      submenuToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function () {
+          const submenu = this.nextElementSibling;
+          submenu.classList.toggle('active');
+          this.setAttribute('aria-expanded', submenu.classList.contains('active'));
+
+          // Change icon from plus to minus or vice versa
+          const icon = this.querySelector('.icon');
+          if (submenu.classList.contains('active')) {
+            icon.innerHTML = '<path d="M19 13H5v-2h14v2z"/>';
+            icon.classList.remove('icon-plus');
+            icon.classList.add('icon-minus');
+          } else {
+            icon.innerHTML = '<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>';
+            icon.classList.remove('icon-minus');
+            icon.classList.add('icon-plus');
+          }
+        });
+      });
+    }
+
+    // Auto-submit country selector on change
+    const countrySelector = document.querySelector('#HeaderCountryForm .localization-selector');
+    if (countrySelector) {
+      countrySelector.addEventListener('change', function () {
+        this.form.submit();
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header V2",
+  "class": "section-header-v2",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "unit": "px",
+      "label": "Logo width"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_selector",
+      "default": true,
+      "label": "Show language selector"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#000000",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#333333",
+      "label": "Text color"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "default": "#0066cc",
+      "label": "Accent color"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "default": "#dddddd",
+      "label": "Border color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header V2",
+      "category": "Header"
+    }
+  ]
+}
+{% endschema %}

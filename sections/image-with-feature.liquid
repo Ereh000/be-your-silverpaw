@@ -1,0 +1,336 @@
+<div class="image-with-features section-{{ section.id }}-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="section__contenter-wrapper">
+      <div class="section__header-wrapper">
+        <div class="section__header">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="image-with-features__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <div class="image-with-features__subheading">{{ section.settings.subheading }}</div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="image-with-features__button-wrapper">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="image-with-features__button button">
+              {{ section.settings.button_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="image-with-features__container">
+        <div class="image-with-features__content">
+          <div class="image-with-features__steps">
+            {%- for block in section.blocks -%}
+              <div class="image-with-features__step" {{ block.shopify_attributes }}>
+                <div class="image-with-features__step-content">
+                  {%- if block.settings.step_title != blank -%}
+                    <div class="image-with-features__step-title">{{ block.settings.step_title }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="image-with-features__image-container">
+          {%- if section.settings.image != blank -%}
+            <img
+              srcset="
+                {%- if section.settings.image.width >= 275 -%}{{ section.settings.image | image_url: width: 275 }} 275w,{%- endif -%}
+                {%- if section.settings.image.width >= 550 -%}{{ section.settings.image | image_url: width: 550 }} 550w,{%- endif -%}
+                {%- if section.settings.image.width >= 710 -%}{{ section.settings.image | image_url: width: 710 }} 710w,{%- endif -%}
+                {%- if section.settings.image.width >= 1420 -%}{{ section.settings.image | image_url: width: 1420 }} 1420w,{%- endif -%}
+              "
+              src="{{ section.settings.image | image_url: width: 550 }}"
+              sizes="(min-width: 990px) 550px, calc(100vw - 30px)"
+              alt="{{ section.settings.image.alt | escape }}"
+              loading="lazy"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              class="image-with-features__image"
+            >
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg image-with-features__image' }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-with-features {
+    position: relative;
+  }
+
+  .image-with-features .section__header-wrapper {
+      display: flex;
+  justify-content: space-between;
+  margin-bottom: 6rem;
+  align-items: flex-start;
+  }
+
+  .image-with-features .section__header{
+    width: 50%;
+  }
+
+  .image-with-features__container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .image-with-features .section__contenter-wrapper  {
+    background-color: {{ section.settings.background_color }};
+    padding: 4rem 4em;
+    border-radius: 8px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .image-with-features__container {
+      flex-direction: row;
+      gap: 60px;
+    }
+
+    .image-with-features__content {
+      width: 40%;
+    }
+
+    .image-with-features__image-container {
+      width: 50%;
+    }
+  }
+
+  .image-with-features__heading {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0px;
+    color: {{ section.settings.heading_color }};
+  }
+
+  .image-with-features__subheading {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    color: {{ section.settings.text_color }};
+  }
+
+  .image-with-features__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .image-with-features__step {
+    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .image-with-features__step:last-child {
+    border-bottom: none;
+  }
+
+  .image-with-features__step-title {
+    font-size: 20px;
+    line-height: 1.5;
+    color: {{ section.settings.text_color }};
+  }
+
+  .image-with-features__step-title p {
+    margin: 0;
+  }
+
+  .image-with-features__image-container {
+    border-radius: 8px;
+    overflow: hidden;
+    flex: 1;
+    aspect-ratio: 4 / 3;
+  }
+
+  .image-with-features__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .image-with-features__button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border: 2px solid {{ section.settings.button_background }};
+    display: flex;
+    width: fit-content;
+    min-width: fit-content;
+    padding: 1rem 4rem;
+    border: 2px solid #000;
+    min-height: fit-content;
+    text-transform: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .image-with-features__button:hover {
+    background-color: {{ section.settings.button_background | color_darken: 10 }};
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media (max-width: 1010px){
+    .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px / 2);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px / 2);
+  }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Image with features",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "How Does It Work?",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "default": "<p>Happiness delivered in just a few steps. Shopping for your furry best friend has never been this easy (or fun).</p>",
+      "label": "Subheading"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop now",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#e6fff5",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#000000",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#333333",
+      "label": "Text color"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "default": "#ffffff",
+      "label": "Button background"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "default": "#000000",
+      "label": "Button text color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 50,
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 50,
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "step_title",
+          "default": "<p>Sign up for free to officially join the DollarWoofClub.</p>",
+          "label": "Step description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with features",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "<p>Sign up for free to officially join the DollarWoofClub.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "<p>Unlock our full site of members-only liquidation deals.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "<p>Fill your cart with discount pet supplies up to 80% off.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "<p>Enjoy fast shipping and a very happy, very spoiled pet.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

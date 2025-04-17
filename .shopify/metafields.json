@@ -59,6 +59,56 @@
         "name": "rich_text_field",
         "category": "TEXT"
       }
+    },
+    {
+      "key": "products_subtitle",
+      "namespace": "custom",
+      "name": "Products Subtitle",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "features_checkbox_1",
+      "namespace": "custom",
+      "name": "Features Checkbox 1",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "features_checkbox_2",
+      "namespace": "custom",
+      "name": "Features Checkbox 2",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "features_checkbox_3",
+      "namespace": "custom",
+      "name": "Features Checkbox 3",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "features_checkbox_4",
+      "namespace": "custom",
+      "name": "Features Checkbox 4",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [],

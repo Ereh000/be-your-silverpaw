@@ -7,10 +7,65 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "name": "t:sections.header-group.name",
   "type": "header",
   "sections": {
+    "announcement_bar_v2_aCWX9E": {
+      "type": "announcement-bar-v2",
+      "blocks": {
+        "announcement_NDYqAU": {
+          "type": "announcement",
+          "settings": {
+            "text": "<p>BUNDLE AND SAVE - GET FREE SHIPPING OVER $50</p>"
+          }
+        },
+        "announcement_dH6W9x": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "<p>BUNDLE AND SAVE - GET FREE SHIPPING OVER $50</p>"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_NDYqAU",
+        "announcement_dH6W9x"
+      ],
+      "settings": {
+        "show_announcement": true,
+        "link": "",
+        "background_color": "#000000",
+        "text_color": "#ffffff",
+        "color_scheme": "accent-1",
+        "show_social_icons": true,
+        "show_country_selector": true,
+        "font_size": 14,
+        "font_size_mobile": 12,
+        "font_weight": "400",
+        "padding_top": 6,
+        "padding_bottom": 6,
+        "padding_side": 0,
+        "padding_top_mobile": 6,
+        "padding_bottom_mobile": 8,
+        "padding_side_mobile": 10,
+        "enable_slider": true,
+        "slider_speed": 5
+      }
+    },
+    "header_v2_TpHt8Y": {
+      "type": "header-v2",
+      "settings": {
+        "logo": "shopify://shop_images/b753ab1671557f8bd3825d10a78824e8.png",
+        "logo_width": 120,
+        "menu": "main-menu",
+        "show_language_selector": true,
+        "heading_color": "#000000",
+        "text_color": "#333333",
+        "accent_color": "#0066cc",
+        "border_color": "#dddddd"
+      }
+    },
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
@@ -27,6 +82,7 @@
       "block_order": [
         "announcement-bar-0"
       ],
+      "disabled": true,
       "settings": {
         "only_homepage": true,
         "layout": "default",
@@ -70,6 +126,7 @@
       "block_order": [
         "mega_menu_mQRxaU"
       ],
+      "disabled": true,
       "settings": {
         "logo": "shopify://shop_images/Dollar_Woof.png",
         "logo_height": 84,
@@ -103,10 +160,31 @@
         "padding_top": 16,
         "padding_bottom": 12
       }
+    },
+    "popup_v2_MNwUem": {
+      "type": "popup-v2",
+      "name": "Newsletter Popup v2",
+      "settings": {
+        "logo": "shopify://shop_images/26cad81328298123be5f022ab38a0b21.gif",
+        "image": "shopify://shop_images/image_3085.png",
+        "image_background_color": "#fff0e0",
+        "heading": "UNLEASH 80% OFF YOUR FIRST ORDER!",
+        "text": "Get exclusive deals, updates, and more when you join our pack.",
+        "email_placeholder": "Enter your email",
+        "button_text": "Subscribe",
+        "show_social_icons": true,
+        "show_once_per_session": false,
+        "show_on_exit": false,
+        "delay": 0
+      }
     }
   },
   "order": [
+    "announcement_bar_v2_aCWX9E",
+    "header_v2_TpHt8Y",
     "announcement-bar",
-    "header"
+    "header",
+    "popup_v2_MNwUem"
   ]
 }
+  

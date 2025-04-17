@@ -1,0 +1,573 @@
+<div
+  class="featured-collection-v2 page-width section-{{ section.id }}-padding"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-collection"
+>
+  {%- if section.settings.title != blank -%}
+    <div class="section-header text-center">
+      <h2 class="section-title">{{ section.settings.title | escape }}</h2>
+      {%- if section.settings.description != blank -%}
+        <div class="section-description rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- liquid
+    assign products_to_display = section.settings.collection.products_count
+
+    if section.settings.collection.products_count > section.settings.products_to_show
+      assign products_to_display = section.settings.products_to_show
+    endif
+  -%}
+
+  <div class="featured-collection-v2__grid grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down">
+    {%- for product in section.settings.collection.products limit: products_to_display -%}
+      <div class="grid__itemm">
+        <div class="featured-collection-v2__card card-wrapper">
+          <div class="card card--product" tabindex="-1">
+            <div class="card__inner">
+              <div class="card__media">
+                <div class="media media--transparent media--hover-effect">
+                  {%- if product.featured_media -%}
+                    <a href="{{ product.url }}" class="" style="position: static !Important;">
+                      <img
+                        srcset="
+                          {%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                          {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                          {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                          {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                          {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                          {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                          {{ product.featured_media | image_url }} {{ product.featured_media.width }}w
+                        "
+                        src="{{ product.featured_media | image_url: width: 533 }}"
+                        sizes="
+                          (min-width: 1200px) calc((1200px - 10rem) / {{ section.settings.columns_desktop }}),
+                          (min-width: 750px) calc((100vw - 11.5rem) / {{ section.settings.columns_desktop }}),
+                          calc(100vw - 4rem)
+                        "
+                        loading="lazy"
+                        width="{{ product.featured_media.width }}"
+                        height="{{ product.featured_media.height }}"
+                        alt="{{ product.featured_media.alt | escape }}"
+                        class="card__image"
+                      >
+                    </a>
+                  {%- else -%}
+                    <a href="{{ product.url }}" class="">
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </a>
+                  {%- endif -%}
+
+                  {%- if section.settings.show_sale_badge and product.compare_at_price > product.price -%}
+                    {%- liquid
+                      assign save_amount = product.compare_at_price | minus: product.price
+                      assign save_percentage = save_amount | times: 100 | divided_by: product.compare_at_price
+                    -%}
+                    <div class="sale-badge">
+                      <span class="sale-badge__label">Upto</span>
+                      <span class="sale-badge__value">{{ save_percentage }}%</span>
+                      <span class="sale-badge__text">off</span>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if section.settings.show_quick_add -%}
+                    <div class="quick-add">
+                      {%- assign product_form_id = 'quick-add-' | append: section.id | append: product.id -%}
+                      {%- form 'product',
+                        product,
+                        id: product_form_id,
+                        class: 'form',
+                        novalidate: 'novalidate',
+                        data-type: 'add-to-cart-form'
+                      -%}
+                        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                        <button
+                          type="submit"
+                          name="add"
+                          class="quick-add__submit button button--full-width button--secondary{% if product.selected_or_first_available_variant.available == false %} sold-out{% endif %}"
+                          {% if product.selected_or_first_available_variant.available == false %}
+                            disabled
+                          {% endif %}
+                        >
+                          <span>
+                            {%- if product.selected_or_first_available_variant.available -%}
+                              {{ 'products.product.add_to_cart' | t }}
+                            {%- else -%}
+                              {{ 'products.product.sold_out' | t }}
+                            {%- endif -%}
+                          </span>
+                        </button>
+                      {%- endform -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <div class="card__content">
+                <div class="card__information">
+                  <h3 class="card__heading">
+                    <a href="{{ product.url }}" class="full-unstyled-link">
+                      {{ product.title | escape }}
+                    </a>
+                  </h3>
+
+                  <div class="card__price">
+                    {%- if product.compare_at_price > product.price -%}
+                      <div class="price price--on-sale">
+                        <div class="price__label">Starting From:</div>
+                        <div class="price__container">
+                          <span class="price__original">{{ product.compare_at_price | money }}</span>
+                          <span class="price__current">{{ product.price | money }}</span>
+                        </div>
+                      </div>
+                    {%- else -%}
+                      <div class="price">
+                        <div class="price__label">Starting From:</div>
+                        <div class="price__container">
+                          <span class="price__current">{{ product.price | money }}</span>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+
+              <div class="card__actions">
+                <a href="{{ product.url }}" class="card__action-button">
+                  {{ section.settings.button_text | default: 'Add to cart' }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      {%- for i in (1..products_to_display) -%}
+        <div class="grid__itemm">
+          <div class="featured-collection-v2__card card-wrapper">
+            <div class="card card--product card--placeholder" tabindex="-1">
+              <div class="card__inner">
+                <div class="card__media">
+                  <div class="media media--transparent">
+                    {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+                <div class="card__content">
+                  <div class="card__information">
+                    <h3 class="card__heading">
+                      <a role="link" aria-disabled="true" class="full-unstyled-link">
+                        {{ 'onboarding.product_title' | t }}
+                      </a>
+                    </h3>
+                    <div class="card__price">
+                      <div class="price">
+                        <span class="price__current">{{ 1999 | money }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.show_view_all
+    and section.settings.collection.products_count > section.settings.products_to_show
+  -%}
+    <div class="center collection__view-all">
+      <a
+        href="{{ section.settings.collection.url }}"
+        class="button button--secondary"
+        aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: section.settings.collection.title }}"
+      >
+        Explore all products
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .featured-collection-v2 {
+      margin-top: 50px;
+      margin-bottom: 50px;
+  }
+
+  .featured-collection-v2 .section-header {
+      margin-bottom: 40px;
+      text-align: center;
+  }
+
+  .featured-collection-v2 .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 15px;
+  }
+
+  .featured-collection-v2 .section-description {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.5;
+  }
+
+  .featured-collection-v2 .featured-collection-v2__grid {
+      display: grid;
+      gap: 30px;
+  }
+
+  .featured-collection-v2 .grid--1-col-desktop {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .featured-collection-v2 .grid--2-col-desktop {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-collection-v2 .grid--3-col-desktop {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .featured-collection-v2 .grid--4-col-desktop {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .featured-collection-v2 .grid--5-col-desktop {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .featured-collection-v2 .card {
+      position: relative;
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .featured-collection-v2 .card__media{
+      border-radius: 8px;
+      overflow: hidden;
+  }
+
+  .featured-collection-v2 .card__inner {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .featured-collection-v2 .card__media {
+      position: relative;
+  }
+
+  .featured-collection-v2 .card__image {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+  }
+
+  .featured-collection-v2 .sale-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #ff0000;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+      height: fit-content !important;
+      /* top: 1rem;
+      left: 1rem; */
+      width: fit-content !important;
+  }
+
+  .featured-collection-v2 .sale-badge__value {
+      font-size: 18px;
+  }
+
+  .featured-collection-v2 .card__content {
+      padding: 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      padding-right: 0;
+  }
+
+  .featured-collection-v2 .card__information {
+      flex-grow: 1;
+  }
+
+  .featured-collection-v2 .card__heading {
+      font-size: 18px;
+      margin-bottom: 13px;
+      margin-top: 8px;
+  }
+
+  .featured-collection-v2 .full-unstyled-link {
+      color: inherit;
+      text-decoration: none;
+      position: static !important;
+  }
+
+  .featured-collection-v2 .card__price {
+      font-size: 16px;
+  }
+
+  .featured-collection-v2 .price.price--on-sale{
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+  }
+
+  .featured-collection-v2 .price__label {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+      font-size: 16px;
+  }
+
+  .featured-collection-v2 .price__container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .featured-collection-v2 .price__original {
+      text-decoration: line-through;
+      color: #999;
+  }
+
+  .featured-collection-v2 .price__current {
+      font-weight: bold;
+      color: #ff0000;
+  }
+
+  .featured-collection-v2 .card__actions {
+      padding: 0 15px 15px;
+      padding-left: 0;
+  }
+
+  .featured-collection-v2 .card__action-button {
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      background: none;
+      color: {{ section.settings.button_color }};
+      width: fit-content;
+      border-bottom: 2px solid #222;
+      border-radius: 0;
+      padding-left: 0;
+      padding-bottom: 8px;
+      padding-right: 14px !important;
+      min-width: fit-content;
+      min-height: 0;
+      text-transform: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+  }
+
+  .featured-collection-v2 .card__action-button:hover {
+      background-color: transparent !important;
+  }
+
+  .featured-collection-v2 .collection__view-all {
+      margin-top: 40px;
+      text-align: center;
+  }
+
+  .featured-collection-v2 .button--secondary {
+      background-color: transparent;
+      border: 2px solid #4a4a4a;
+      color: #4a4a4a;
+      padding: 10px 20px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 4px;
+      display: flex;
+      width: fit-content;
+      margin: auto;
+      border-radius: 30px;
+      min-height: auto;
+      min-width: auto;
+      padding: 10px 30px;
+      font-size: 14px;
+      text-transform: none;
+  }
+
+  .featured-collection-v2 .button--secondary:hover {
+      background-color: #4a4a4a;
+      color: white;
+  }
+
+  .featured-collection-v2 .center {
+      text-align: center;
+  }
+
+  @media screen and (max-width: 989px) {
+      .featured-collection-v2 .grid--1-col-tablet-down {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
+      .featured-collection-v2 .grid--2-col-tablet-down {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+  }
+
+  @media screen and (max-width: 749px) {
+      .featured-collection-v2 {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      }
+
+      .featured-collection-v2 .section-header {
+      margin-bottom: 25px;
+      }
+
+      .featured-collection-v2 .section-title {
+      font-size: 24px;
+      }
+
+      .featured-collection-v2 .featured-collection-v2__grid {
+      gap: 15px;
+      }
+
+      .featured-collection-v2 .card__heading {
+      font-size: 16px;
+      }
+  }
+</style>
+
+<style>
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top   }}px ;
+    padding-bottom: {{ section.settings.padding_bottom }}px ;
+  }
+  @media(max-width: 1010px){
+    .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top   }}px / 2) ;
+    padding-bottom: calc({{ section.settings.padding_bottom }}px / 2) ;
+  }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Collection V2",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Best Sellers",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "default": "<p>Treat your pup to our most-loved picks! These customer favorites are flying off the shelves—for good reason</p>",
+      "label": "Description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View all' button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "default": true,
+      "label": "Show sale badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "default": false,
+      "label": "Show quick add button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "Add to cart",
+      "label": "Button text"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "default": "#000000",
+      "label": "Button color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 50,
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 50,
+      "label": "Padding bottom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection V2",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

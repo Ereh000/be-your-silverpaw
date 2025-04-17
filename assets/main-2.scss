@@ -1,0 +1,278 @@
+.announcement-bar-v2 p {
+    margin: 0 !important;
+}
+
+.page-width {
+    padding: 0 8rem;
+}
+
+.header-v2__mobile-menu-list{
+    margin-top: 2rem!important;
+}
+
+
+// media query for mobile
+@media (max-width: 1010px) {
+
+    .page-width {
+        // padding: 0 3rem !important;
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+
+
+    // header v2 section
+    .header-v2 {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+
+    .header-v2__top {
+        // flex: 1;
+        margin: 0 !important;
+    }
+
+    .header-v2__mobile-toggle {
+        position: static !important;
+    }
+
+    .header-v2__search-container,
+    .header-v2__localization {
+        display: none !important;
+    }
+
+    .header-v2__logo-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .collection-left-image-wrapper {
+        display: none;
+    }
+
+    .collection-slider {
+        padding: 0 !important;
+    }
+
+    // image with features section
+    .image-with-features__content {
+        width: 100% !important;
+    }
+
+    .image-with-features .section__header-wrapper {
+        margin-bottom: 1rem !important;
+    }
+
+    // featured collection slider section
+    .featured-collection-slider__slider-container {
+        margin: 0 3rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+
+    // announcement bar section
+    .announcement-bar__social,
+    .localization-form {
+        display: none !important;
+    }
+
+    .image-with-features .section__contenter-wrapper {
+        padding: 4rem 3rem !important;
+    }
+
+
+    .image-with-features__container {
+        flex-direction: column-reverse !important;
+        // gap: 4rem;
+    }
+
+    .image-with-features__steps {
+        margin-bottom: 0 !important;
+    }
+
+}
+
+@media(max-width: 540px) {
+    .page-width {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+
+    // announcement bar section
+    .announcement-bar-v2 {
+        padding: 2px 0rem !important;
+    }
+
+    // slideshow v2 section
+    .slideshow-v2__content-wrapper {
+        padding: 0 !important;
+
+        .slideshow-v2__content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center !important;
+        }
+
+        .slideshow-v2__heading {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .slideshow-v2__text {
+            font-size: 14px;
+        }
+    }
+
+
+
+    // featured collection slider section
+    .collection-tabs-container {
+        .collection-tabs {
+            flex-wrap: nowrap;
+            overflow: scroll;
+            width: auto !important;
+            margin-bottom: 2rem;
+        }
+
+        .collection-description {
+            margin-bottom: 2rem !important;
+        }
+
+        .collection-tabs-content {
+            width: 100% !important;
+
+            .collection-card:nth-child(1) {
+                margin-left: 4% !important;
+            }
+        }
+
+        .slider-controls {
+            margin: 0 !important;
+        }
+    }
+
+
+    // featured collection v2 section
+    .featured-collection-v2 {
+        .card__content {
+            padding: 8px 0 !important;
+        }
+
+        .card__heading {
+            margin-bottom: 8px !important;
+        }
+
+        .price.price--on-sale {
+            flex-direction: column;
+            margin: 0 !important;
+            align-items: flex-start !important;
+            gap: 0 !important;
+            font-size: 14px !important;
+        }
+
+        .price__label {
+            font-size: 12px !important;
+        }
+
+        .collection__view-all {
+            margin-top: 1rem !important;
+        }
+    }
+
+    .image-with-features {
+        .image-with-features__subheading {
+            margin-bottom: 2rem !important;
+        }
+
+        .section__header-wrapper {
+            flex-direction: column;
+            margin-bottom: 4rem !important;
+        }
+
+        .section__header {
+            width: 100% !important;
+        }
+
+        .image-with-features__container {
+            gap: 3rem !important;
+        }
+
+        .section__contenter-wrapper {
+            padding: 2rem !important;
+            padding-top: 4rem !important;
+
+            .image-with-features__step-title {
+                font-size: 14px !important;
+            }
+        }
+    }
+
+    // featured collection slider section
+    .featured-collection-slider {
+        .featured-collection-slider__title {
+            font-size: 28px !important;
+        }
+
+        .featured-collection-slider__header {
+            margin-bottom: 30px !important;
+        }
+
+        .featured-collection-slider__container {
+            padding: 3rem 0 !important;
+        }
+
+        .featured-collection-slider__slider-container {
+            padding: 0 !important;
+            background: transparent !important;
+
+            .featured-collection-slider__slide {
+                aspect-ratio: 4 / 6 !important;
+            }
+        }
+
+        .featured-collection-slider__card-content {
+            padding: 10px !important;
+
+            .featured-collection-slider__card-title,
+            .featured-collection-slider__card-price {
+                font-size: 14px !important;
+            }
+
+            svg {
+                width: 3rem !important;
+            }
+        }
+    }
+
+    .faqs-section {
+        .faqs-container {
+            padding: 0 !important;
+            background: transparent !important;
+        }
+        .faq-number{
+            margin: 0;
+        }
+        .faq-question{
+            font-size: 14px !important;
+        }
+        .faq-answer{
+            padding: 0!important;
+            .faq-answer-content{
+                font-size: 14px!important;
+                p{
+                    margin-top: 0!important;
+                };
+            }
+        }
+    }
+}
