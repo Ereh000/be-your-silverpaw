@@ -20,13 +20,13 @@
           </div>
         {% endif %}
 
-        <h2 class="popup-v2__heading">{{ section.settings.heading }}</h2>
+        <h2 class="popup-v2__heading">{{ section.settings.heading }}</h2>  
         <p class="popup-v2__text">{{ section.settings.text }}</p>
 
         <div class="popup-v2__form">
           {%- form 'customer', id: 'popup-v2-form' -%}
             <input type="hidden" name="contact[tags]" value="newsletter">
-            <div class="popup-v2__form-field">
+            <div class="popup-v2__form-field" id="email-step">
               <input
                 type="email"
                 name="contact[email]"
@@ -38,6 +38,11 @@
               <button type="submit" class="popup-v2__submit">
                 {{ section.settings.button_text }}
               </button>
+            </div>
+            
+            <div class="popup-v2__success" id="success-message" style="display: none;">
+              <p class="popup-v2__success-text">You're subscribed! One more step as Login to grab 80% Off</p>
+              <a href="/account" class="popup-v2__login-btn">Login Now</a>
             </div>
           {%- endform -%}
         </div>
@@ -54,7 +59,7 @@
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                </svg>  
               </a>
             {% endif %}
 
@@ -108,219 +113,222 @@
 </div>
 
 <style>
-    .popup-v2 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
+  .popup-v2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
 
-    .popup-v2.active {
-      opacity: 1;
-      visibility: visible;
-    }
+  .popup-v2.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
+  .popup-v2__container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup-v2__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    color: #000;
+    padding: 5px;
+  }
+
+  .popup-v2__content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .popup-v2__left {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .popup-v2__right {
+    flex: 1.2;
+    background-color: {{ section.settings.image_background_color }};
+  }
+
+  .popup-v2__logo {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .popup-v2__logo img {
+    height: 10rem;
+    width: auto;
+  }
+
+  .popup-v2__heading {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    color: #000;
+  }
+
+  .popup-v2__text {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #555;
+  }
+
+  .popup-v2__form {
+    margin-bottom: 25px;
+  }
+
+  .popup-v2__form-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popup-v2__input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .popup-v2__submit {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .popup-v2__submit:hover {
+    background-color: #333;
+  }
+
+  .popup-v2__social {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .popup-v2__social-link {
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  .popup-v2__social-link:hover {
+    color: #555;
+  }
+
+  .popup-v2__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 767px) {
     .popup-v2__container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      background-color: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .popup-v2__close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      z-index: 10;
-      color: #000;
-      padding: 5px;
+      max-width: 90%;
+      margin: 0 15px;
     }
 
     .popup-v2__content {
-      display: flex;
-      flex-direction: row;
-    }
-
-    .popup-v2__left {
-      flex: 1;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
+      flex-direction: column-reverse;
     }
 
     .popup-v2__right {
-      flex: 1.2;
-      background-color: {{ section.settings.image_background_color }};
+      height: 200px;
     }
 
-    .popup-v2__logo {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    .popup-v2__logo img {
-      height: 10rem;
-      width: auto;
+    .popup-v2__left {
+      padding: 30px 20px;
     }
 
     .popup-v2__heading {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 15px;
-      line-height: 1.2;
-      color: #000;
+      font-size: 24px;
     }
+  }
 
-    .popup-v2__text {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 25px;
-      color: #555;
+  @media screen and (max-width: 480px) {
+    .popup-v2__container{
+        height: 80vh;
     }
-
+    .popup-v2__content{
+        height: 100%;
+    }
+    .popup-v2__left{
+        padding: 10px 20px;
+    }
+    .popup-v2__logo{
+        margin: 0;
+    }
+    .popup-v2__logo img{
+      height: 5rem;
+    }
+    .popup-v2__heading {
+        font-size: 17px;
+        line-height: 1.4;
+        margin: 0;
+    }
+    .popup-v2__text{
+        margin: 10px 0;
+        font-size: 13px;
+    }
     .popup-v2__form {
-      margin-bottom: 25px;
-    }
-
-    .popup-v2__form-field {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .popup-v2__input {
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
       margin-bottom: 10px;
-      width: 100%;
     }
-
-    .popup-v2__submit {
-      background-color: #000;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 12px 15px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .popup-v2__input{
+      font-size: 13px;
+      padding: 8px 10px;
     }
-
-    .popup-v2__submit:hover {
-      background-color: #333;
+    .popup-v2__submit{
+      font-size: 13px;
+      padding: 8px;
     }
-
-    .popup-v2__social {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
+    .popup-v2__social-link svg{
+      height: 15px;
+      width: 15px;
     }
-
-    .popup-v2__social-link {
-      color: #000;
-      transition: color 0.3s ease;
-    }
-
-    .popup-v2__social-link:hover {
-      color: #555;
-    }
-
-    .popup-v2__image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @media screen and (max-width: 767px) {
-      .popup-v2__container {
-        max-width: 90%;
-        margin: 0 15px;
-      }
-
-      .popup-v2__content {
-        flex-direction: column-reverse;
-      }
-
-      .popup-v2__right {
-        height: 200px;
-      }
-
-      .popup-v2__left {
-        padding: 30px 20px;
-      }
-
-      .popup-v2__heading {
-        font-size: 24px;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .popup-v2__container{
-          height: 80vh;
-      }
-      .popup-v2__content{
-          height: 100%;
-      }
-      .popup-v2__left{
-          padding: 10px 20px;
-      }
-      .popup-v2__logo{
-          margin: 0;
-      }
-      .popup-v2__logo img{
-        height: 5rem;
-      }
-      .popup-v2__heading {
-          font-size: 17px;
-          line-height: 1.4;
-          margin: 0;
-      }  
-      .popup-v2__text{
-          margin: 10px 0;
-          font-size: 13px;
-      }
-      .popup-v2__form {
-        margin-bottom: 10px;
-      }
-      .popup-v2__input{
-        font-size: 13px;
-        padding: 8px 10px;
-      }
-      .popup-v2__submit{
-        font-size: 13px;
-        padding: 8px;
-      }
-      .popup-v2__social-link svg{
-        height: 15px;
-        width: 15px;
-      }
-    }
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const popup = document.getElementById('popup-v2');
     const closeButton = popup.querySelector('.popup-v2__close');
+    const form = document.getElementById('popup-v2-form');
+    const emailStep = document.getElementById('email-step');
+    const successMessage = document.getElementById('success-message');
 
     // Function to show popup
     function showPopup() {
@@ -340,7 +348,63 @@
       popup.classList.remove('active');
       setTimeout(() => {
         popup.style.display = 'none';
+
+        // Reset form after hiding
+        if (successMessage.style.display === 'block') {
+          setTimeout(() => {
+            emailStep.style.display = 'block';
+            successMessage.style.display = 'none';
+          }, 300);
+        }
       }, 300);
+    }
+
+    // Handle form submission
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('popup-v2-email').value;  
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+          return;
+        }
+
+        // Create form data manually
+        const formData = new URLSearchParams();
+        formData.append('form_type', 'customer');
+        formData.append('utf8', '✓');
+        formData.append('contact[email]', email);
+        formData.append('contact[tags]', 'newsletter');
+
+        try {
+          const response = await fetch('/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            body: formData
+          });
+
+          if (response.ok) {
+            // Show success message briefly
+            emailStep.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // Clear the form
+            form.reset();
+            
+            // Redirect to account page after a short delay
+            setTimeout(() => {
+              window.location.href = '/account';
+            }, 1500); // 1.5 seconds delay to show the success message
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+
+        return false;
+      });
     }
 
     // Close popup when clicking the close button
@@ -408,7 +472,7 @@
     {
       "type": "text",
       "id": "email_placeholder",
-      "label": "Email Placeholder",
+      "label": "Email Placeholder",   
       "default": "Enter your email"
     },
     {
@@ -453,3 +517,47 @@
   ]
 }
 {% endschema %}
+
+<style>
+  .popup-v2__success {
+    text-align: center;
+  }
+
+  .popup-v2__success-text {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: #28a745;
+    font-weight: 500;
+  }
+
+  .popup-v2__login-btn {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+
+  .popup-v2__login-btn:hover {
+    background-color: #333;
+  }
+
+  @media screen and (max-width: 480px) {
+    .popup-v2__success-text {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .popup-v2__login-btn {
+      font-size: 13px;
+      padding: 8px 20px;
+    }
+  }
+</style>

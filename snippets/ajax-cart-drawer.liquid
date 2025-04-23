@@ -1,0 +1,1341 @@
+<style>
+  /* Add these new styles for the cart drawer */
+  .cart-drawer-v2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 480px;
+    height: 100%;
+    background: #fff;
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-v2__qty-input::-webkit-inner-spin-button,
+  .cart-drawer-v2__qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer-v2__qty-input {
+    -moz-appearance: textfield;
+  }
+
+  .cart-drawer-v2.active {
+    transform: translateX(0);
+  }
+
+  .cart-drawer-v2__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .cart-drawer-v2__overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-drawer-v2__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: none;
+  }
+
+  .cart-drawer-v2__heading {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .cart-drawer-v2__close {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-drawer-v2__close svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .cart-drawer-v2__content {
+    padding: 0 20px 20px;
+    height: 100%;
+  }
+  #CartDrawerForm {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+  }
+
+  .cart-drawer-v2__free-shipping-message-top {
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .cart-drawer-v2__free-shipping-amount {
+    font-weight: bold;
+  }
+
+  .cart-drawer-v2__free-shipping-progress {
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .cart-drawer-v2__free-shipping-indicator {
+    height: 100%;
+    background: #ff6b6b;
+    border-radius: 2px;
+  }
+
+  .cart-drawer-v2__items {
+    margin-bottom: 20px;
+  }
+
+  .cart-drawer-v2__item {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+
+  .cart-drawer-v2__item-image {
+    width: 80px;
+    margin-right: 15px;
+  }
+
+  .cart-drawer-v2__item-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  .cart-drawer-v2__item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-v2__item-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .cart-drawer-v2__item-title,
+  .cart-drawer-v2__item-tag {
+    font-weight: 500;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .cart-drawer-v2__item-meta {
+    margin-bottom: 4px;
+  }
+
+  .cart-drawer-v2__item-variant {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+  }
+
+  .cart-drawer-v2__item-price-qty {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cart-drawer-v2__item-quantity {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: fit-content;
+  }
+
+  .cart-drawer-v2__qty-btn {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .cart-drawer-v2__qty-input {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    margin-left: 6px;
+    margin-right: -4px;
+  }
+
+  .cart-drawer-v2__item-price-final {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .cart-drawer-v2__item-remove {
+    position: static;
+    top: 15px;
+    right: 0;
+    background: none;
+    border: none;
+    /* padding: 5px; */
+    cursor: pointer;
+  }
+
+  .cart-drawer-v2__item-remove svg {
+    width: 18px;
+    height: 18px;
+    color: #999;
+  }
+
+  .cart-drawer-v2__actions {
+    display: flex;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+
+  .cart-drawer-v2__note-container,
+  .cart-drawer-v2__shipping-container {
+    flex: 1;
+  }
+  .cart-drawer-v2__shipping-container {
+    display: none;
+  }
+
+  .cart-drawer-v2__note-button,
+  .cart-drawer-v2__shipping-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 400;
+    gap: 8px;
+    font-family: var(--font-body-family);
+    letter-spacing: 1.1px;
+  }
+
+  .cart-drawer-v2__note-container {
+    border-right: 1px solid #eee;
+  }
+
+  .cart-drawer-v2__footer {
+    padding-top: 0;
+    font-family: var(--font-body-family);
+  }
+
+  .cart-drawer-v2__subtotal {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+  }
+
+  .cart-drawer-v2__taxes-note {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+
+  .cart-drawer-v2__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-drawer-v2__checkout {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 0;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .cart-drawer-v2__view-cart {
+    background: #fff;
+    color: #000;
+    padding: 15px;
+    border-radius: 0;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #000;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .cart-drawer-v2__empty {
+    text-align: center;
+    padding: 30px 0;
+  }
+
+  .cart-drawer-v2__continue-shopping {
+    display: inline-block;
+    margin-top: 15px;
+    background: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 0;
+    text-decoration: none;
+  }
+
+  .cart-drawer-v2__loading-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .cart-drawer-v2__note-popup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000047;
+    flex-direction: column;
+    z-index: 11;
+    padding-bottom: 2rem;
+    display: none;
+  }
+
+  .cart-drawer-v2__note-popup.active {
+    display: flex;
+  }
+
+  .cart-drawer-v2__note-popup-content {
+    padding: 20px;
+    position: relative;
+    background: #fff;
+    margin-top: auto;
+  }
+
+  .cart-drawer-v2__note-popup-content h3 {
+    font-size: 16px;
+    margin: 0 0 15px;
+    font-weight: 500;
+  }
+
+  .cart-drawer-v2__note-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    margin-bottom: 15px;
+    font-family: inherit;
+  }
+
+  .cart-drawer-v2__note-apply {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  .cart-drawer-v2__note-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .cart-drawer-v2__note-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .cart-drawer-v2 {
+      width: 100%;
+    }
+  }
+</style>
+
+<style>
+  .cart-drawer-v2__subtotal {
+    padding-bottom: 4px;
+  }
+  .cart-drawer-v2__buttons {
+    flex-direction: row;
+    gap: 0;
+    justify-content: space-between;
+  }
+  .cart-drawer-v2__checkout,
+  .cart-drawer-v2__view-cart {
+    width: 100%;
+  }
+
+  /* Add these new styles for the cart drawer */
+  .cart-drawer-v2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 480px;
+    height: 100%;
+    background: #fff;
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Add styles for recommendations panel */
+  .cart-drawer-layout {
+    display: flex;
+    width: 800px;
+    height: 100%;
+  }
+
+  .cart-drawer-recommendations {
+    width: 320px;
+    height: 100%;
+    background: #f9f9f9;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+    padding-right: 10px;
+  }
+
+  .cart-drawer-main {
+    width: 480px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-recommendations__title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .cart-drawer-recommendations__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cart-drawer-recommendations__item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .cart-drawer-recommendations__item-image {
+    width: 100%;
+    margin-bottom: 10px;
+    max-width: 25%;
+  }
+
+  .cart-drawer-recommendations__item-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  .cart-drawer-recommendations__item-title {
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #000;
+    text-decoration: none;
+    /* line-height: 1.35; */
+  }
+
+  .cart-drawer-recommendations__item-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+
+  .cart-drawer-recommendations__item-price-final {
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .cart-drawer-recommendations__item-price-compare {
+    font-size: 12px;
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .cart-drawer-recommendations__item-button {
+    background: none;
+    color: #000;
+    border: none;
+    padding: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    text-align: left;
+    padding-left: 0;
+  }
+
+  /* Adjust existing styles */
+  .cart-drawer-v2.active {
+    transform: translateX(0);
+    width: 800px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .cart-drawer-layout {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cart-drawer-recommendations {
+      width: 100%;
+      height: 100%;
+      /* max-height: 360px; */
+      border-right: none;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-drawer-main {
+      width: 100%;
+    }
+
+    .cart-drawer-v2.active {
+      width: 100%;
+    }
+  }
+
+  /* Existing styles continue below */
+  .cart-drawer-v2__qty-input::-webkit-inner-spin-button,
+  .cart-drawer-v2__qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer-recommendations__item-details {
+    line-height: 1.2 !important;
+  }
+
+  @media (max-width: 767px) {
+    .cart-drawer-recommendations__list {
+      flex-direction: row;
+    }
+    .cart-drawer-recommendations__item {
+      min-width: 40%;
+    }
+
+    @media (max-width: 480px) {
+      .cart-drawer-recommendations__item {
+        min-width: 90%;
+      }
+      .cart-drawer-recommendations {
+        height: fit-content;
+        padding-bottom: 0;
+      }
+      .cart-drawer-v2__header {
+        padding-bottom: 0;
+      }
+      .cart-drawer-main {
+        max-height: 70%;
+      }
+      .cart-drawer-v2__items {
+        margin-bottom: 0px;
+        max-height: fit-content;
+        overflow: auto;
+      }
+    }
+  }
+</style>
+
+<div id="CartDrawer" class="cart-drawer-v2">
+  <div class="cart-drawer-layout">
+    <!-- Recommendations panel -->
+    <div class="cart-drawer-recommendations">
+      <h3 class="cart-drawer-recommendations__title">YOU MAY ALSO LIKE</h3>
+      <div class="cart-drawer-recommendations__list" id="CartRecommendations">
+        <!-- Recommendations will be loaded here via JS -->
+      </div>
+    </div>
+
+    <!-- Main cart panel -->
+    <div class="cart-drawer-main">
+      <div class="cart-drawer-v2__header">
+        <h2 class="cart-drawer-v2__heading">CART</h2>
+        <button type="button" class="cart-drawer-v2__close" aria-label="Close">
+          <svg aria-hidden="true" focusable="false" class="icon icon-close" viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="cart-drawer-v2__content">
+        {% if cart.item_count > 0 %}
+          <form action="{{ routes.cart_url }}" method="post" id="CartDrawerForm">
+            {% if cart.total_price < settings.free_shipping_threshold and settings.free_shipping_threshold > 0 %}
+              <div class="cart-drawer-v2__free-shipping-message-top">
+                <span>Spend </span>
+                <span class="cart-drawer-v2__free-shipping-amount">
+                  {{- settings.free_shipping_threshold | minus: cart.total_price | money -}}
+                </span>
+                <span> more to reach free shipping</span>
+              </div>
+              <div class="cart-drawer-v2__free-shipping-progress">
+                {% assign percent_to_free_shipping = cart.total_price
+                  | times: 100.0
+                  | divided_by: settings.free_shipping_threshold
+                %}
+                <div
+                  class="cart-drawer-v2__free-shipping-indicator"
+                  style="width: {{ percent_to_free_shipping }}%;"
+                ></div>
+              </div>
+            {% endif %}
+
+            <div class="cart-drawer-v2__items">
+              {% for item in cart.items %}
+                <div class="cart-drawer-v2__item" data-cart-item="{{ item.key }}">
+                  <div class="cart-drawer-v2__item-image">
+                    {% if item.image %}
+                      <img src="{{ item.image | img_url: '120x' }}" alt="{{ item.title | escape }}" width="" height="">
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="cart-drawer-v2__item-details">
+                    <div class="cart-drawer-v2__item-title-wrapper">
+                      {% if item.product.tags contains 'Christmas' %}
+                        <span class="cart-drawer-v2__item-tag">🎄 {{ item.product.title }}</span>
+                      {% else %}
+                        <a href="{{ item.url }}" class="cart-drawer-v2__item-title">{{ item.product.title }}</a>
+                      {% endif %}
+                      <span class="cart-drawer-v2__item-price-final">{{ item.final_price | money }}</span>
+                    </div>
+
+                    <div class="cart-drawer-v2__item-meta">
+                      <p class="cart-drawer-v2__item-variant">
+                        Size:
+                        {% if item.variant.title != 'Default Title' %}{{ item.variant.title }}{% else %}S{% endif %}
+                      </p>
+                    </div>
+
+                    <div class="cart-drawer-v2__item-price-qty">
+                      <div class="cart-drawer-v2__item-quantity">
+                        <button
+                          type="button"
+                          class="cart-drawer-v2__qty-btn decrease cart-drawer-v2__qty-minus"
+                          data-action="decrease"
+                          data-item-key="{{ item.key }}"
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          aria-label="Item quantity"
+                          data-item-key="{{ item.key }}"
+                          class="cart-drawer-v2__qty-input"
+                        >
+                        <button
+                          type="button"
+                          class="cart-drawer-v2__qty-btn increase cart-drawer-v2__qty-plus"
+                          data-action="increase"
+                          data-item-key="{{ item.key }}"
+                          {% if item.variant.inventory_quantity != null
+                            and item.quantity >= item.variant.inventory_quantity
+                          %}
+                            disabled
+                            style="opacity: 0.5; cursor: not-allowed;"
+                          {% endif %}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="cart-drawer-v2__item-remove"
+                        data-item-key="{{ item.key }}"
+                        aria-label="Remove"
+                      >
+                        <svg aria-hidden="true" focusable="false" class="icon icon-trash" viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="cart-drawer-v2__footer">
+              <div class="cart-drawer-v2__actions">
+                <div class="cart-drawer-v2__note-container">
+                  <button type="button" class="cart-drawer-v2__note-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    <span>NOTE</span>
+                  </button>
+                </div>
+                <div class="cart-drawer-v2__shipping-container">
+                  <button type="button" class="cart-drawer-v2__shipping-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="1" y="3" width="15" height="13"></rect>
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    <span>SHIPPING</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="cart-drawer-v2__subtotal">
+                <span class="cart-drawer-v2__subtotal-label">Subtotal</span>
+                <span class="cart-drawer-v2__subtotal-amount">{{ cart.total_price | money }} USD</span>
+              </div>
+              <p class="cart-drawer-v2__taxes-note">Taxes, discounts and shipping calculated at checkout.</p>
+
+              <div class="cart-drawer-v2__buttons">
+                <button type="submit" name="checkout" class="cart-drawer-v2__checkout">CHECK OUT</button>
+                <a href="{{ routes.cart_url }}" class="cart-drawer-v2__view-cart"> VIEW CART </a>
+              </div>
+            </div>
+          </form>
+        {% else %}
+          <div class="cart-drawer-v2__empty">
+            <p>Your cart is empty</p>
+            <a href="{{ routes.all_products_collection_url }}" class="cart-drawer-v2__continue-shopping">
+              Continue Shopping
+            </a>
+          </div>
+        {% endif %}
+      </div>
+      <div class="cart-drawer-v2__loading-spinner" style="display: none;"></div>
+
+      <!-- Add Note Popup -->
+      <div class="cart-drawer-v2__note-popup">
+        <div class="cart-drawer-v2__note-popup-content">
+          <h3>Order special instructions</h3>
+          <textarea
+            class="cart-drawer-v2__note-textarea"
+            rows="4"
+            placeholder="Add special instructions for your order..."
+          >{{ cart.note }}</textarea>
+          <button type="button" class="cart-drawer-v2__note-apply">APPLY</button>
+          <button type="button" class="cart-drawer-v2__note-close" aria-label="Close">
+            <svg aria-hidden="true" focusable="false" class="icon icon-close" viewBox="0 0 24 24">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="CartDrawerOverlay" class="cart-drawer-v2__overlay"></div>
+
+<script>
+  // DOM Elements
+  const drawer = document.getElementById('CartDrawer');
+  const overlay = document.getElementById('CartDrawerOverlay');
+  const form = document.getElementById('CartDrawerForm');
+  const recommendationsContainer = document.getElementById('CartRecommendations');
+
+  // Helper Functions
+  function formatMoney(cents) {
+    return (cents / 100).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+  }
+
+  // Add function to fetch product recommendations
+  async function fetchRecommendations() {
+    console.log('Fetching recommendations...');
+    try {
+      // Get the first product ID from the cart to use as a seed
+      let productId = '';
+      const cartItems = drawer.querySelectorAll('.cart-drawer-v2__item');
+      if (cartItems.length > 0) {
+        const firstItem = cartItems[0];
+        const itemUrl = firstItem.querySelector('.cart-drawer-v2__item-title')?.getAttribute('href');
+        if (itemUrl) {
+          const urlParts = itemUrl.split('/');
+          productId = urlParts[urlParts.length - 1].split('?')[0]; // Remove any query parameters
+        }
+      }
+
+      // If no valid product ID found, fetch popular products
+      if (!productId) {
+        const response = await fetch('/collections/all/products.json?limit=4');
+        const data = await response.json();
+        renderRecommendations(data.products);
+        return;
+      }
+
+      // Fetch recommendations based on the product ID
+      const response = await fetch(`/recommendations/products.json?product_id=${productId}&limit=4`);
+      const data = await response.json();
+
+      console.log('Product ID:', productId);
+      console.log('Fetched recommendations:', data);
+
+      // Check if we got valid recommendations
+      if (data && data.products && data.products.length > 0) {
+        renderRecommendations(data.products);
+      } else {
+        // Fallback to popular products if no recommendations
+        const fallbackResponse = await fetch('/collections/all/products.json?limit=4');
+        const fallbackData = await fallbackResponse.json();
+        renderRecommendations(fallbackData.products);
+      }
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      // Try to fetch popular products as a fallback
+      try {
+        const fallbackResponse = await fetch('/collections/all/products.json?limit=4');
+        const fallbackData = await fallbackResponse.json();
+        renderRecommendations(fallbackData.products);
+      } catch (fallbackError) {
+        console.error('Error fetching fallback products:', fallbackError);
+      }
+    }
+  }
+
+  // Function to render recommendations
+  function renderRecommendations(products) {
+    if (!recommendationsContainer) return;
+
+    if (!products || products.length === 0) {
+      recommendationsContainer.innerHTML = '<p>No recommendations available</p>';
+      return;
+    }
+
+    const html = products
+      .map((product) => {
+        // Handle different API response formats
+        const image = product.featured_image || product.images[0] || {};
+        const imageUrl = image.src || image.url || '';
+
+        // Handle price formatting
+        const price = product.price || (product.variants && product.variants[0] ? product.variants[0].price : 0);
+        const comparePrice =
+          product.compare_at_price ||
+          (product.variants && product.variants[0] ? product.variants[0].compare_at_price : 0);
+
+        // Format prices for display
+        const formattedPrice = typeof price === 'number' ? formatMoney(price) : formatMoney(parseInt(price) * 100);
+        const formattedComparePrice = comparePrice
+          ? typeof comparePrice === 'number'
+            ? formatMoney(comparePrice)
+            : formatMoney(parseInt(comparePrice) * 100)
+          : 0;
+
+        // Get product URL
+        const productUrl = product.url || `/products/${product.handle}`;
+
+        // Get variant ID
+        const variantId = product.variants && product.variants[0] ? product.variants[0].id : '';
+
+        return `
+        <div class="cart-drawer-recommendations__item">
+          <div class="cart-drawer-recommendations__item-image">
+            <img src="${imageUrl}" alt="${product.title}" loading="lazy">
+          </div>
+          <div class="cart-drawer-recommendations__item-details">
+          <a href="${productUrl}" class="cart-drawer-recommendations__item-title">${product.title}</a>
+          <div class="cart-drawer-recommendations__item-price">
+            <span class="cart-drawer-recommendations__item-price-final">${formattedPrice}</span>
+            ${
+              formattedComparePrice && parseInt(comparePrice) > parseInt(price)
+                ? `<span class="cart-drawer-recommendations__item-price-compare">${formattedComparePrice}</span>`
+                : ''
+            }  
+          </div>
+          <a href="${productUrl}" class="cart-drawer-recommendations__item-button">
+            CHOOSE OPTIONS
+          </a>
+          </div>
+        </div>
+      `;
+      })
+      .join('');
+
+    recommendationsContainer.innerHTML = html;
+  }
+
+  // Function to handle adding a recommended product to cart
+  async function handleAddRecommendedProduct(event) {
+    const button = event.currentTarget;
+    const variantId = button.dataset.variantId;
+
+    if (!variantId) return;
+
+    try {
+      toggleLoading(true);
+
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              id: variantId,
+              quantity: 1,
+            },
+          ],
+        }),
+      });
+
+      const result = await response.json();
+
+      // Refresh the cart
+      const cartResponse = await fetch('/cart.js');
+      const cart = await cartResponse.json();
+
+      // Update the cart UI
+      updateCartUI(cart);
+
+      // If the product has multiple variants, redirect to the product page
+      if (button.textContent.trim() === 'CHOOSE OPTIONS') {
+        const productUrl = button
+          .closest('.cart-drawer-recommendations__item')
+          .querySelector('.cart-drawer-recommendations__item-title')
+          .getAttribute('href');
+        window.location.href = productUrl;
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    } finally {
+      toggleLoading(false);
+    }
+  }
+
+  // Add this new function
+  function toggleLoading(show) {
+    const spinner = drawer.querySelector('.cart-drawer-v2__loading-spinner');
+    if (spinner) {
+      spinner.style.display = show ? 'flex' : 'none';
+    }
+  }
+
+  function openDrawer() {
+    drawer.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Add these functions after your existing helper functions
+  function openNotePopup() {
+    const notePopup = drawer.querySelector('.cart-drawer-v2__note-popup');
+    notePopup.classList.add('active');
+  }
+
+  function closeNotePopup() {
+    const notePopup = drawer.querySelector('.cart-drawer-v2__note-popup');
+    notePopup.classList.remove('active');
+  }
+
+  async function updateCartNote(note) {
+    try {
+      toggleLoading(true);
+      const response = await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          note: note,
+        }),
+      });
+      await response.json();
+      closeNotePopup();
+    } catch (error) {
+      console.error('Error updating cart note:', error);
+    } finally {
+      toggleLoading(false);
+    }
+  }
+
+  // Add this to your bindEvents function
+  function bindEvents() {
+    const closeButton = drawer.querySelector('.cart-drawer-v2__close');
+    closeButton?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+
+    drawer.querySelectorAll('.cart-drawer-v2__qty-btn').forEach((button) => {
+      button.addEventListener('click', handleQuantityChange);
+    });
+
+    drawer.querySelectorAll('.cart-drawer-v2__qty-input').forEach((input) => {
+      input.addEventListener('change', handleQuantityInput);
+    });
+
+    drawer.querySelectorAll('.cart-drawer-v2__item-remove').forEach((button) => {
+      button.addEventListener('click', handleRemoveItem);
+    });
+
+    // Note popup events
+    const noteButton = drawer.querySelector('.cart-drawer-v2__note-button');
+    const noteCloseButton = drawer.querySelector('.cart-drawer-v2__note-close');
+    const noteApplyButton = drawer.querySelector('.cart-drawer-v2__note-apply');
+
+    noteButton?.addEventListener('click', openNotePopup);
+    noteCloseButton?.addEventListener('click', closeNotePopup);
+    noteApplyButton?.addEventListener('click', () => {
+      const noteText = drawer.querySelector('.cart-drawer-v2__note-textarea').value;
+      updateCartNote(noteText);
+    });
+  }
+
+  // Update the updateItemQuantity function
+  async function updateItemQuantity(itemKey, quantity) {
+    try {
+      toggleLoading(true);
+      const response = await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: itemKey,
+          quantity: quantity,
+        }),
+      });
+
+      const cart = await response.json();
+
+      if (quantity === 0) {
+        // If item is being removed, fetch the entire cart section
+        const cartResponse = await fetch('/?section_id=ajax-cart-drawer');
+        const html = await cartResponse.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newCartContent = doc.querySelector('.cart-drawer-v2__content');
+
+        if (newCartContent) {
+          drawer.querySelector('.cart-drawer-v2__content').innerHTML = newCartContent.innerHTML;
+          // Rebind events after content update
+          bindEvents();
+        }
+      } else {
+        updateCartUI(cart);
+      }
+
+      if (cart.item_count === 0) {
+        location.reload();
+      }
+    } catch (error) {
+      console.error('Error updating cart:', error);
+    } finally {
+      toggleLoading(false);
+    }
+  }
+
+  // Move the event binding code to a separate function
+  function bindEvents() {
+    const closeButton = drawer.querySelector('.cart-drawer-v2__close');
+    closeButton?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+
+    drawer.querySelectorAll('.cart-drawer-v2__qty-btn').forEach((button) => {
+      button.addEventListener('click', handleQuantityChange);
+    });
+
+    drawer.querySelectorAll('.cart-drawer-v2__qty-input').forEach((input) => {
+      input.addEventListener('change', handleQuantityInput);
+    });
+
+    drawer.querySelectorAll('.cart-drawer-v2__item-remove').forEach((button) => {
+      button.addEventListener('click', handleRemoveItem);
+    });
+  }
+
+  // Update the initialization
+  document.addEventListener('DOMContentLoaded', () => {
+    bindEvents();
+    window.cartDrawer = { openDrawer };
+  });
+
+  function updateCartUI(cart) {
+    if (!cart || !cart.items) {
+      console.warn('Invalid cart data received');
+      return;
+    }
+
+    // Update subtotal
+    const subtotalElement = drawer.querySelector('.cart-drawer-v2__subtotal-amount');
+    if (subtotalElement) {
+      subtotalElement.textContent = formatMoney(cart.total_price || 0);
+    }
+
+    // Update free shipping progress if element exists
+    const freeShippingAmount = drawer.querySelector('.cart-drawer-v2__free-shipping-amount');
+    if (freeShippingAmount) {
+      const freeShippingThreshold = parseFloat(freeShippingAmount.dataset.threshold || 0);
+      const remainingAmount = Math.max(0, freeShippingThreshold - (cart.total_price || 0));
+      freeShippingAmount.textContent = formatMoney(remainingAmount);
+
+      const progressBar = drawer.querySelector('.cart-drawer-v2__free-shipping-indicator');
+      if (progressBar) {
+        const percent = Math.min(((cart.total_price || 0) / freeShippingThreshold) * 100, 100);
+        progressBar.style.width = `${percent}%`;
+      }
+    }
+
+    // Update item quantities and check inventory
+    cart.items.forEach((item) => {
+      if (!item) return;
+      const itemElement = drawer.querySelector(`[data-cart-item="${item.key}"]`);
+      if (itemElement) {
+        const quantityInput = itemElement.querySelector('.cart-drawer-v2__qty-input');
+        const priceElement = itemElement.querySelector('.cart-drawer-v2__item-price-final');
+        const increaseButton = itemElement.querySelector('.cart-drawer-v2__qty-btn.increase');
+
+        if (quantityInput) quantityInput.value = item.quantity;
+        if (priceElement) priceElement.textContent = formatMoney(item.final_line_price);
+
+        // Disable increase button if at inventory limit
+        if (increaseButton) {
+          if (item.variant_inventory_quantity !== null && item.quantity >= item.variant_inventory_quantity) {
+            increaseButton.disabled = true;
+            increaseButton.style.opacity = '0.5';
+            increaseButton.style.cursor = 'not-allowed';
+          } else {
+            increaseButton.disabled = false;
+            increaseButton.style.opacity = '1';
+            increaseButton.style.cursor = 'pointer';
+          }
+        }
+      }
+    });
+  }
+
+  // Event Handlers
+  function handleQuantityChange(event) {
+    const button = event.currentTarget;
+    const action = button.dataset.action;
+    const itemKey = button.dataset.itemKey;
+    const quantityInput = drawer.querySelector(`.cart-drawer-v2__qty-input[data-item-key="${itemKey}"]`);
+    let newQuantity = parseInt(quantityInput.value);
+
+    if (action === 'increase') {
+      newQuantity += 1;
+    } else if (action === 'decrease') {
+      newQuantity = Math.max(0, newQuantity - 1);
+    }
+
+    updateItemQuantity(itemKey, newQuantity);
+  }
+
+  function handleQuantityInput(event) {
+    const input = event.currentTarget;
+    const itemKey = input.dataset.itemKey;
+    const newQuantity = parseInt(input.value);
+    updateItemQuantity(itemKey, newQuantity);
+  }
+
+  function handleRemoveItem(event) {
+    const button = event.currentTarget;
+    const itemKey = button.dataset.itemKey;
+    updateItemQuantity(itemKey, 0);
+  }
+
+  // Add these functions at the top level of your script
+  function openDrawer() {
+    drawer.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Initialize cart drawer
+  document.addEventListener('DOMContentLoaded', () => {
+    // Close drawer events
+    const closeButton = drawer.querySelector('.cart-drawer-v2__close');
+    closeButton?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+
+    // Quantity change events
+    drawer.querySelectorAll('.cart-drawer-v2__qty-btn').forEach((button) => {
+      button.addEventListener('click', handleQuantityChange);
+    });
+
+    // Quantity input events
+    drawer.querySelectorAll('.cart-drawer-v2__qty-input').forEach((input) => {
+      input.addEventListener('change', handleQuantityInput);
+    });
+
+    // Remove item events
+    drawer.querySelectorAll('.cart-drawer-v2__item-remove').forEach((button) => {
+      button.addEventListener('click', handleRemoveItem);
+    });
+
+    // Note popup events
+    const noteButton = drawer.querySelector('.cart-drawer-v2__note-button');
+    const noteCloseButton = drawer.querySelector('.cart-drawer-v2__note-close');
+    const noteApplyButton = drawer.querySelector('.cart-drawer-v2__note-apply');
+
+    noteButton?.addEventListener('click', openNotePopup);
+    noteCloseButton?.addEventListener('click', closeNotePopup);
+    noteApplyButton?.addEventListener('click', () => {
+      const noteText = drawer.querySelector('.cart-drawer-v2__note-textarea').value;
+      updateCartNote(noteText);
+    });
+
+    console.log('Cart drawer initialized');
+
+    fetchRecommendations();
+
+    // Make openDrawer function globally available and fetch initial recommendations
+    // Expose all necessary functions in window.cartDrawer
+    window.cartDrawer = {
+      openDrawer,
+      closeDrawer,
+      updateItemQuantity,
+      handleQuantityChange,
+      handleQuantityInput,
+      handleRemoveItem,
+      openNotePopup,
+      closeNotePopup,
+      updateCartNote,
+      closeNotePopup,
+      updateCartNote  
+    };
+
+    fetchRecommendations();
+
+    console.log('Cart drawer initializeddddddd', window.cartDrawer);
+
+    // If the drawer is already open (e.g., on page load), fetch recommendations
+    if (drawer.classList.contains('active')) {
+      fetchRecommendations();
+    }
+  });
+</script>

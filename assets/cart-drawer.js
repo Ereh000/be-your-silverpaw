@@ -71,7 +71,7 @@ class MiniCart extends HTMLElement {
     return new DOMParser()
       .parseFromString(html, 'text/html')
       .querySelector(selector).innerHTML;
-  }
+  }  
 
   setActiveElement(element) {
     this.activeElement = element;

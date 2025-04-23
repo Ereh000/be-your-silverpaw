@@ -86,7 +86,36 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "14339172867238703359": {
+        "type": "shopify://apps/yotpo-product-reviews/blocks/reviews_tab/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+        "disabled": false,
+        "settings": {
+          "product": ""
+        }
+      },
+      "7570552984445421165": {
+        "type": "shopify://apps/yotpo-product-reviews/blocks/settings/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+        "disabled": false,
+        "settings": {}
+      },
+      "15191099883265461803": {
+        "type": "shopify://apps/reelfy-videos/blocks/app-embed/4022ffb0-05c3-4ef3-a409-6df51f4b1b3f",
+        "disabled": false,
+        "settings": {}
+      },
+      "5816581709647520605": {
+        "type": "shopify://apps/reelfy-videos/blocks/app-pops/4022ffb0-05c3-4ef3-a409-6df51f4b1b3f",
+        "disabled": false,
+        "settings": {}
+      },
+      "15786547694540827628": {
+        "type": "shopify://apps/wholesale-discount-pro/blocks/star_rating/81fd4d00-2674-4a0e-8fee-a1a772120620",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Beauty": {

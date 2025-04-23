@@ -19,8 +19,7 @@
                     alt="{{ block.settings.image.alt | escape }}"
                     loading="lazy"
                     width="{{ block.settings.image.width }}"
-                    height="{{ block.settings.image.height }}"
-                  >
+                    height="{{ block.settings.image.height }}">
                 {% else %}
                   {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                 {% endif %}
@@ -36,7 +35,7 @@
                 <div class="image-with-feature-v2__feature-icon">
                   {% comment %}
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                     </svg>
                   {% endcomment %}
                   {% render 'icon-check-circle' %}
@@ -66,13 +65,17 @@
               alt="{{ section.settings.main_image.alt | escape }}"
               loading="lazy"
               width="{{ section.settings.main_image.width }}"
-              height="{{ section.settings.main_image.height }}"
-            >
+              height="{{ section.settings.main_image.height }}">
             {% if section.settings.show_badge %}
               <div class="image-with-feature-v2__badge">
                 <span>{{ section.settings.badge_text }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="185" height="185" viewBox="0 0 185 185" fill="none">
-                  <path d="M92.4993 0L99.1668 9.99399L107.35 1.20023L112.33 12.1348L121.815 4.76781L124.977 16.3608L135.522 10.6126L136.785 22.5633L148.114 18.5811L147.444 30.5794L159.265 28.4691L156.682 40.2051L168.688 40.0183L164.256 51.1874L176.137 52.9321L169.973 63.244L181.421 66.8725L173.684 76.0624L184.4 81.482L175.291 89.3113L185 96.3802L174.753 102.645L183.204 111.182L172.086 115.722L179.059 125.504L167.358 128.2L172.672 138.975L160.69 139.757L164.209 151.246L152.257 150.094L153.888 162L142.277 158.943L141.979 170.958L131.005 166.076L128.787 177.886L118.739 171.307L114.655 182.607L105.792 174.501L99.9491 185L92.4993 175.574L85.0509 185L79.2082 174.501L70.3448 182.607L66.2612 171.307L56.2131 177.886L53.9946 166.076L43.0212 170.958L42.7234 158.943L31.112 162L32.7428 150.094L20.7912 151.246L24.3095 139.757L12.3275 138.975L17.6421 128.2L5.94071 125.504L12.9139 115.722L1.79624 111.182L10.2467 102.645L0 96.3802L9.70925 89.3113L0.599631 81.482L11.3162 76.0624L3.58058 66.8725L15.0265 63.244L8.86342 52.9321L20.7435 51.1874L16.3118 40.0183L28.3177 40.2051L25.7351 28.4691L37.5557 30.5794L36.8859 18.5811L48.2153 22.5633L49.4781 10.6126L60.0226 16.3608L63.1849 4.76781L72.6705 12.1348L77.6502 1.20023L85.8332 9.99399L92.4993 0Z" fill="#FF0000"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="185"
+                  height="185"
+                  viewBox="0 0 185 185"
+                  fill="none">
+                  <path d="M92.4993 0L99.1668 9.99399L107.35 1.20023L112.33 12.1348L121.815 4.76781L124.977 16.3608L135.522 10.6126L136.785 22.5633L148.114 18.5811L147.444 30.5794L159.265 28.4691L156.682 40.2051L168.688 40.0183L164.256 51.1874L176.137 52.9321L169.973 63.244L181.421 66.8725L173.684 76.0624L184.4 81.482L175.291 89.3113L185 96.3802L174.753 102.645L183.204 111.182L172.086 115.722L179.059 125.504L167.358 128.2L172.672 138.975L160.69 139.757L164.209 151.246L152.257 150.094L153.888 162L142.277 158.943L141.979 170.958L131.005 166.076L128.787 177.886L118.739 171.307L114.655 182.607L105.792 174.501L99.9491 185L92.4993 175.574L85.0509 185L79.2082 174.501L70.3448 182.607L66.2612 171.307L56.2131 177.886L53.9946 166.076L43.0212 170.958L42.7234 158.943L31.112 162L32.7428 150.094L20.7912 151.246L24.3095 139.757L12.3275 138.975L17.6421 128.2L5.94071 125.504L12.9139 115.722L1.79624 111.182L10.2467 102.645L0 96.3802L9.70925 89.3113L0.599631 81.482L11.3162 76.0624L3.58058 66.8725L15.0265 63.244L8.86342 52.9321L20.7435 51.1874L16.3118 40.0183L28.3177 40.2051L25.7351 28.4691L37.5557 30.5794L36.8859 18.5811L48.2153 22.5633L49.4781 10.6126L60.0226 16.3608L63.1849 4.76781L72.6705 12.1348L77.6502 1.20023L85.8332 9.99399L92.4993 0Z" fill="#FF0000" />
                 </svg>
               </div>
             {% endif %}
@@ -93,7 +96,7 @@
 
   .image-with-feature-v2__container {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 30px;
   }
 
@@ -126,7 +129,7 @@
     height: auto;
     border-radius: 8px;
     object-fit: cover;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
   }
 
   .image-with-feature-v2__features {
@@ -203,14 +206,15 @@
     font-size: 18px;
     line-height: 1.2;
   }
-  .image-with-feature-v2__badge span{
+  .image-with-feature-v2__badge span {
     position: absolute;
     padding: 1rem;
   }
 
   @media screen and (max-width: 768px) {
     .image-with-feature-v2__container {
-      flex-direction: column;
+      flex-direction: column-reverse;
+      gap: 0;
     }
 
     .image-with-feature-v2__badge {
@@ -223,110 +227,120 @@
     .image-with-feature-v2__heading {
       font-size: 28px;
     }
+    .image-with-feature-v2__right,
+    .image-with-feature-v2__left {
+      min-width: unset;
+    }
+    .image-with-feature-v2__badge {
+      bottom: 1rem;
+      left: 0;
+    }
+    .image-with-feature-v2__main-image {
+      height: auto;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
   }
+
+  @media(max-width: 480px) {}
 </style>
 
 {% schema %}
-{
-  "name": "Image with Features v2",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Why Join the Club?"
-    },
-    {
-      "type": "image_picker",
-      "id": "main_image",
-      "label": "Main Image (Right Side)"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button Label",
-      "default": "Become a member"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_badge",
-      "label": "Show Badge",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Badge Text",
-      "default": "Get upto 80%off"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "small_image",
-      "name": "Small Image",
-      "limit": 2,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        }
-      ]
-    },
-    {
-      "type": "feature",
-      "name": "Feature",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Feature Text",
-          "default": "Unlock exclusive, members-only savings."
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Image with Features v2",
-      "blocks": [
-        {
-          "type": "small_image"
-        },
-        {
-          "type": "small_image"
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "text": "Unlock exclusive, members-only savings."
+  {
+    "name": "Image with Features v2",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Why Join the Club?"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_image",
+        "label": "Main Image (Right Side)"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button Label",
+        "default": "Become a member"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button Link"
+      }, {
+        "type": "checkbox",
+        "id": "show_badge",
+        "label": "Show Badge",
+        "default": true
+      }, {
+        "type": "text",
+        "id": "badge_text",
+        "label": "Badge Text",
+        "default": "Get upto 80%off"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "small_image",
+        "name": "Small Image",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
           }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "text": "Massive discounts on high-quality pet gear."
+        ]
+      }, {
+        "type": "feature",
+        "name": "Feature",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Feature Text",
+            "default": "Unlock exclusive, members-only savings."
           }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "text": "Limited stock, always rotating with new finds."
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with Features v2",
+        "blocks": [
+          {
+            "type": "small_image"
+          },
+          {
+            "type": "small_image"
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": "Unlock exclusive, members-only savings."
+            }
+          },
+          {
+            "type": "feature",
+            "settings": {
+              "text": "Massive discounts on high-quality pet gear."
+            }
+          }, {
+            "type": "feature",
+            "settings": {
+              "text": "Limited stock, always rotating with new finds."
+            }
+          }, {
+            "type": "feature",
+            "settings": {
+              "text": "Fast shipping (because waiting for treats is the worst)."
+            }
           }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "text": "Fast shipping (because waiting for treats is the worst)."
-          }
-        }
-      ]
-    }
-  ]
-}
+        ]
+      }
+    ]
+  }
 {% endschema %}

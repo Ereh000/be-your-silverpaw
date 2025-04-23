@@ -1,0 +1,1063 @@
+<div class="product-tabs" style="background-color: {{ section.settings.background_color }};">
+  <div class="page-width">
+    <div class="container">
+      <!-- Tab Navigation -->
+      <div class="tabs-navigation">
+        {% for block in section.blocks %}
+          <button class="tab-button {% if forloop.first %}active{% endif %}" data-tab="{{ block.type }}">
+            {{ block.settings.tab_title }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content-container">
+        {% for block in section.blocks %}
+          <div
+            class="tab-content {% if forloop.first %}active{% endif %}"
+            id="{{ block.type }}"
+            {{ block.shopify_attributes }}>
+            {% case block.type %}
+              {% when 'details_tab' %}
+                <div class="details-content">
+                  <div class="details-text">
+                    {% if block.settings.enable_prodcut_description == true %}
+                      <div class="">
+                        {{ product.description }}
+                      </div>
+                    {% else %}
+                      <p class="details-paragraph">{{ block.settings.content_paragraph_1 }}</p>
+                      <p class="details-paragraph">{{ block.settings.content_paragraph_2 }}</p>
+                      {% if block.settings.learn_more_link != blank %}
+                        <p class="learn-more">
+                          <a href="{{ block.settings.learn_more_link }}">{{ block.settings.learn_more_text }}</a>
+                          {{ block.settings.learn_more_description }}
+                        </p>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+
+              {% when 'features_tab' %}
+                {% if block.settings.feature_title != blank %}
+                  <div class="features-content">
+                    <div class="feature-image-container">
+                      {% if block.settings.feature_image != blank %}
+                        <img
+                          src="{{ block.settings.feature_image | img_url: 'master' }}"
+                          alt="{{ block.settings.feature_title }}"
+                          loading="lazy"
+                          width=""
+                          height=""
+                          class="feature-image">
+                      {% endif %}
+                    </div>
+                    <div class="feature-text">
+                      <h2 class="feature-title">{{ block.settings.feature_title }}</h2>
+                      <p class="feature-description">{{ block.settings.feature_description }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.feature_title2 != blank %}
+                  <div class="features-content">
+                    <div class="feature-image-container">
+                      {% if block.settings.feature_image2 != blank %}
+                        <img
+                          src="{{ block.settings.feature_image2 | img_url:'master' }}"
+                          alt="{{ block.settings.feature_title2 }}"
+                          loading="lazy"
+                          width=""
+                          height=""
+                          class="feature-image">
+                      {% else %}
+                        {{ 'lifestyle-1' | placeholder_svg_tag }}
+                      {% endif %}
+                    </div>
+                    <div class="feature-text">
+                      <h2 class="feature-title">{{ block.settings.feature_title2 }}</h2>
+                      <p class="feature-description">{{ block.settings.feature_description2 }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.feature_title3 != blank %}
+                  <div class="features-content">
+                    <div class="feature-image-container">
+                      {% if block.settings.feature_image3 != blank %}
+                        <img
+                          src="{{ block.settings.feature_image3 | img_url:'master' }}"
+                          alt="{{ block.settings.feature_title3 }}"
+                          loading="lazy"
+                          width=""
+                          height=""
+                          class="feature-image">
+                      {% endif %}
+                    </div>
+                    <div class="feature-text">
+                      <h2 class="feature-title">{{ block.settings.feature_title3 }}</h2>
+                      <p class="feature-description">{{ block.settings.feature_description3 }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.feature_title4 != blank %}
+                  <div class="features-content">
+                    <div class="feature-image-container">
+                      {% if block.settings.feature_image4 != blank %}
+                        <img
+                          src="{{ block.settings.feature_image4 | img_url:'master' }}"
+                          alt="{{ block.settings.feature_title4 }}"
+                          loading="lazy"
+                          width=""
+                          height=""
+                          class="feature-image">
+                      {% endif %}
+                    </div>
+                    <div class="feature-text">
+                      <h2 class="feature-title">{{ block.settings.feature_title4 }}</h2>
+                      <p class="feature-description">{{ block.settings.feature_description4 }}</p>
+                    </div>
+                  </div>
+                {% endif %}
+
+              {% when 'materials_care_tab' %}
+                <div class="materials-care-content">
+                  <div class="materials-column">
+                    <h3 class="materials-title">{{ block.settings.materials_title }}</h3>
+                    <ul class="materials-list">
+                      {% assign materials = block.settings.materials_list | split: '
+                                                                            ' %}
+                      {% for material in materials %}
+                        {% if material != blank %}
+                          <li class="material-item">{{ material }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="care-column">
+                    <h3 class="care-title">{{ block.settings.care_title }}</h3>
+                    <ul class="care-list">
+                      {% assign care_instructions = block.settings.care_list | split: '
+                                                                            ' %}
+                      {% for instruction in care_instructions %}
+                        {% if instruction != blank %}
+                          <li class="care-item">{{ instruction }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+              {% when 'videos_tab' %}
+                <div class="videos-content">
+                  <h2 class="videos-title">{{ block.settings.section_title }}</h2>
+                  <div class="videos-grid">
+                    <div class="video-item">
+                      {% if block.settings.video1_thumbnail != blank %}
+                        <div class="video-thumbnail">
+                          <img
+                            src="{{ block.settings.video1_thumbnail | img_url: 'master' }}"
+                            alt="{{ block.settings.video1_title }}"
+                            loading="lazy"
+                            width=""
+                            height="">
+                          <a href="{{ block.settings.video1_url }}" class="play-button">PLAY VIDEO</a>
+                        </div>
+                      {% endif %}
+                      <h3 class="video-title">{{ block.settings.video1_title }}</h3>
+                      <p class="video-description">{{ block.settings.video1_description }}</p>
+                    </div>
+
+                    {% if block.settings.video2_title != blank %}
+                      <div class="video-item">
+                        {% if block.settings.video2_thumbnail != blank %}
+                          <div class="video-thumbnail">
+                            <img
+                              src="{{ block.settings.video2_thumbnail | img_url: 'master' }}"
+                              alt="{{ block.settings.video2_title }}"
+                              loading="lazy"
+                              width=""
+                              height="">
+                            <a href="{{ block.settings.video2_url }}" class="play-button">PLAY VIDEO</a>
+                          </div>
+                        {% endif %}
+                        <h3 class="video-title">{{ block.settings.video2_title }}</h3>
+                        <p class="video-description">{{ block.settings.video2_description }}</p>
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.video3_title != blank %}
+                      <div class="video-item">
+                        {% if block.settings.video3_thumbnail != blank %}
+                          <div class="video-thumbnail">
+                            <img
+                              src="{{ block.settings.video3_thumbnail | img_url:'master' }}"
+                              alt="{{ block.settings.video3_title }}"
+                              loading="lazy"
+                              width=""
+                              height="">
+                            <a href="{{ block.settings.video3_url }}" class="play-button">PLAY VIDEO</a>
+                          </div>
+                        {% endif %}
+                        <h3 class="video-title">{{ block.settings.video3_title }}</h3>
+                        <p class="video-description">{{ block.settings.video3_description }}</p>
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.video4_title != blank %}
+                      <div class="video-item">
+                        {% if block.settings.video4_thumbnail != blank %}
+                          <div class="video-thumbnail">
+                            <img
+                              src="{{ block.settings.video4_thumbnail | img_url:'master' }}"
+                              alt="{{ block.settings.video4_title }}"
+                              loading="lazy"
+                              width=""
+                              height="">
+                            <a href="{{ block.settings.video4_url }}" class="play-button">PLAY VIDEO</a>
+                          </div>
+                        {% endif %}
+                        <h3 class="video-title">{{ block.settings.video4_title }}</h3>
+                        <p class="video-description">{{ block.settings.video4_description }}</p>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+            {% endcase %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal__content">
+      <button class="video-modal__close">&times;</button>
+      <div class="video-modal__iframe-container">
+        <iframe
+          id="videoIframe"
+          frameborder="0"
+          allowfullscreen></iframe>
+      </div>
+      <div class="video-modal__playlist">
+        <h3>More videos</h3>
+        <div class="video-modal__playlist-items">
+          {% for block in section.blocks %}
+            {% if block.type == 'videos_tab' %}
+              {% for block in section.blocks %}
+                {% if block.type == 'videos_tab' %}
+                  {% for i in (1..4) %}
+                    {% capture video_url_key %}video{{ i }}_url{% endcapture %}
+                    {% capture video_thumbnail_key %}video{{ i }}_thumbnail{% endcapture %}
+                    {% capture video_title_key %}video{{ i }}_title{% endcapture %}
+                    {% assign video_url = block.settings[video_url_key] %}
+                    {% assign video_thumbnail = block.settings[video_thumbnail_key] %}
+                    {% assign video_title = block.settings[video_title_key] %}
+                    {% if video_url != blank and video_thumbnail != blank %}
+                      <div class="video-modal__playlist-item" data-video-url="{{ video_url }}">
+                        <img
+                          src="{{ video_thumbnail | img_url: '150x' }}"
+                          width=""
+                          height=""
+                          alt="{{ video_title }}">
+                        <span>{{ video_title }}</span>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Add these new styles */
+  .video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+  }
+
+  .video-modal__content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #000;
+  }
+
+  .video-modal__close {
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    color: #fff;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .video-modal__iframe-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-modal__iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-modal__playlist {
+    background: #fff;
+    padding: 20px;
+  }
+
+  .video-modal__playlist h3 {
+    margin: 0 0 15px;
+    color: #000;
+  }
+
+  .video-modal__playlist-items {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .video-modal__playlist-item {
+    flex: 0 0 200px;
+    cursor: pointer;
+  }
+
+  .video-modal__playlist-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .video-modal__playlist-item span {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #000;
+  }
+
+  @media (max-width: 768px) {
+    .video-modal__content {
+      margin: 20px auto;
+    }
+
+    .video-modal__close {
+      right: 0;
+      top: -40px;
+    }
+  }
+</style>
+
+<style>
+  .product-tabs {
+    color: white;
+    padding: 40px 0;
+  }
+
+  .product-tabs .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-tabs .tabs-navigation {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: fit-content;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0;
+    border-radius: 20px;
+  }
+
+  .product-tabs .tab-button {
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 12px 24px !important;
+    border-radius: 20px;
+    margin: 0 !important;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    font-weight: 600;
+  }
+
+  .product-tabs .tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* color: #05223F; */
+  }
+
+  .product-tabs .tab-button.active {
+    background-color: white;
+    color: #05223f;
+  }
+
+  .product-tabs .tab-content {
+    display: none;
+    padding: 20px 0;
+  }
+
+  .product-tabs .tab-content.active {
+    display: block;
+  }
+
+  /* Details Tab Styling */
+  .product-tabs .details-text {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .product-tabs .details-text h1,
+  .product-tabs .details-text h2,
+  .product-tabs .details-text h3,
+  .product-tabs .details-text h4,
+  .product-tabs .details-text h5,
+  .product-tabs .details-text .h0,
+  .product-tabs .details-text .h1,
+  .product-tabs .details-text .h2,
+  .product-tabs .details-text .h3,
+  .product-tabs .details-text .h4,
+  .product-tabs .details-text .h5 {
+    color: #fff !important;
+  }
+
+  .product-tabs .details-paragraph {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .product-tabs .learn-more {
+    margin-top: 30px;
+  }
+
+  .product-tabs .learn-more a {
+    color: #ffa500;
+    text-decoration: underline;
+  }
+
+  /* Features Tab Styling */
+  .product-tabs .features-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .product-tabs .feature-image-container {
+    width: 60%;
+  }
+
+  .product-tabs .feature-image {
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .product-tabs .feature-text {
+    width: 40%;
+    padding-left: 40px;
+  }
+
+  .product-tabs .feature-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .product-tabs .feature-description {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+
+  /* Materials & Care Tab Styling */
+  .product-tabs .materials-care-content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .product-tabs .materials-column,
+  .product-tabs .care-column {
+    width: 48%;
+  }
+
+  .product-tabs .materials-title,
+  .product-tabs .care-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .product-tabs .materials-list,
+  .product-tabs .care-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .product-tabs .material-item,
+  .product-tabs .care-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .product-tabs .material-item:before,
+  .product-tabs .care-item:before {
+    content: '•';
+    color: #ffa500;
+    position: absolute;
+    left: 0;
+  }
+  .product-tabs .material-item li:before {
+    content: '•';
+    color: #ffa500;
+    position: absolute;
+    left: 0;
+  }
+  .product-tabs .material-item ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  /* Videos Tab Styling */
+  .product-tabs .videos-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .product-tabs .videos-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 4rem;
+  }
+
+  .product-tabs .video-item {
+    width: 48%;
+  }
+
+  .product-tabs .video-thumbnail {
+    position: relative;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .product-tabs .video-thumbnail img {
+    width: 100%;
+    display: block;
+  }
+
+  .product-tabs .play-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: #ffa500;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .product-tabs .video-title {
+    font-size: 21px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .product-tabs .video-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .product-tabs .tabs-navigation {
+      flex-wrap: wrap;
+    }
+
+    .product-tabs .tab-button {
+      margin-bottom: 10px;
+    }
+
+    .product-tabs .features-content {
+      flex-direction: column;
+    }
+
+    .product-tabs .feature-image-container,
+    .product-tabs .feature-text {
+      width: 100%;
+    }
+
+    .product-tabs .feature-text {
+      padding-left: 0;
+      padding-top: 20px;
+    }
+
+    .product-tabs .materials-care-content {
+      flex-direction: column;
+    }
+
+    .product-tabs .materials-column,
+    .product-tabs .care-column {
+      width: 100%;
+    }
+
+    .product-tabs .care-column {
+      margin-top: 30px;
+    }
+
+    .product-tabs .videos-grid {
+      flex-direction: column;
+      row-gap: 0;
+    }
+
+    .product-tabs .video-item {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    .video-modal {
+      /* display: block; */
+      margin: 0;  
+      padding-top: 2rem;
+      padding-bottom: 4rem !important;
+    }
+    .video-modal__playlist {
+      padding: 10px 20px !important;
+    }
+    .video-modal__playlist h3 {
+      margin: 0 0 8px !important;
+    }
+    .video-modal__playlist-item {
+      flex: 0 0 150px !important;
+      cursor: pointer;
+      height: auto;
+    }
+    .video-modal__playlist-item img {
+      width: 100%;
+      aspect-ratio: 4 / 2;
+      height: auto !important;
+    }
+    .video-modal__playlist-item span {
+      margin-top: 0;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 470px) {
+    .product-tabs .tabs-navigation {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      background: transparent;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 0;
+      width: 100%;
+    }
+    .product-tabs .tab-content {
+      margin-top: 2rem;
+    }
+    .product-tabs .feature-text {
+      padding-top: 0;
+    }
+    .product-tabs .materials-title,
+    .product-tabs .care-title {
+      margin-top: 0;
+    }
+
+    .video-modal {
+      /* display: flex !important;   */
+      align-items: center;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        // Remove active class from all buttons and contents
+        tabButtons.forEach((btn) => btn.classList.remove('active'));
+        tabContents.forEach((content) => content.classList.remove('active'));
+
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        // Show corresponding content
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Product Tabs",
+    "tag": "section",
+    "class": "product-tabs-section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#05223F"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "details_tab",
+        "name": "Details Tab",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_prodcut_description",
+            "label": "Enable Product Description",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Title",
+            "default": "Details"
+          },
+          {
+            "type": "richtext",
+            "id": "content_paragraph_1",
+            "label": "First Paragraph",
+            "default": "<p>The Web Master™ has been the trusted harness of avalanche rescue teams, service dog handlers, and conservation teams since its introduction as Ruffwear's first harness. Proven over two decades in the field, it carries on a legacy of delivering durability and comfort without restricting movement – now with a front leash attachment point and a neck buckle to eliminate the over-the-head on/off experience for head-shy dogs.</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "content_paragraph_2",
+            "label": "Second Paragraph",
+            "default": "<p>The reinforced handle offers balanced lift and assist support for navigating technical terrain, while a perforated foam back panel provides breathable structure without adding bulk. Four points of adjustment means you can dial in a secure and comfortable fit for a wide range of body shapes. Rugged, reliable, and ready for your next adventure.</p>"
+          }, {
+            "type": "text",
+            "id": "learn_more_text",
+            "label": "Learn More Text",
+            "default": "Learn more"
+          }, {
+            "type": "text",
+            "id": "learn_more_description",
+            "label": "Learn More Description",
+            "default": "about how our partnerships with working dog teams help shape our gear."
+          }, {
+            "type": "url",
+            "id": "learn_more_link",
+            "label": "Learn More URL"
+          }
+        ]
+      }, {
+        "type": "features_tab",
+        "name": "Features Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Title",
+            "default": "Features"
+          },
+          {
+            "type": "image_picker",
+            "id": "feature_image",
+            "label": "Feature Image"
+          },
+          {
+            "type": "text",
+            "id": "feature_title",
+            "label": "Feature Title",
+            "default": "THREE-STRAP STYLE HARNESS"
+          },
+          {
+            "type": "text",
+            "id": "feature_description",
+            "label": "Feature Description",
+            "default": "Three-strap style harness – great for houdini dogs"
+          }, {
+            "type": "image_picker",
+            "id": "feature_image2",
+            "label": "Feature Image 2"
+          }, {
+            "type": "text",
+            "id": "feature_title2",
+            "label": "Feature Title 2",
+            "default": "THREE-STRAP STYLE HARNESS"
+          }, {
+            "type": "text",
+            "id": "feature_description2",
+            "label": "Feature Description 2",
+            "default": "Three-strap style harness – great for houdini dogs"
+          }, {
+            "type": "image_picker",
+            "id": "feature_image3",
+            "label": "Feature Image 3"
+          }, {
+            "type": "text",
+            "id": "feature_title3",
+            "label": "Feature Title 3",
+            "default": "THREE-STRAP STYLE HARNESS"
+          }, {
+            "type": "text",
+            "id": "feature_description3",
+            "label": "Feature Description 3",
+            "default": "Three-strap style harness – great for houdini dogs"
+          }, {
+            "type": "image_picker",
+            "id": "feature_image4",
+            "label": "Feature Image 4"
+          }, {
+            "type": "text",
+            "id": "feature_title4",
+            "label": "Feature Title 4",
+            "default": "THREE-STRAP STYLE HARNESS"
+          }, {
+            "type": "text",
+            "id": "feature_description4",
+            "label": "Feature Description 4",
+            "default": "Three-strap style harness – great for houdini dogs"
+          }
+        ]
+      }, {
+        "type": "materials_care_tab",
+        "name": "Materials & Care Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Title",
+            "default": "Materials & Care"
+          },
+          {
+            "type": "text",
+            "id": "materials_title",
+            "label": "Materials Title",
+            "default": "MATERIALS"
+          },
+          {
+            "type": "richtext",
+            "id": "materials_list",
+            "label": "Materials List (one per line)",
+            "default": "<p>Shell (bluesign® approved): 150D polyester ripstop with DWR and PU coating\nPadding: PE foam\nLining (bluesign® approved): polyester knit mesh\nWebbing: polypropylene\nBuckles (bluesign® approved): ITW Nexus Airloc side-release\nLeash Connection Point: anodized 6061-T6 aluminum V-ring\nMade in Vietnam"
+          },
+          {
+            "type": "text",
+            "id": "care_title",
+            "label": "Care Title",
+            "default": "CARE"
+          }, {
+            "type": "textarea",
+            "id": "care_list",
+            "label": "Care List (one per line)",
+            "default": "Hand wash\nMild detergent\nAir dry"
+          }
+        ]
+      }, {
+        "type": "videos_tab",
+        "name": "Videos Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Title",
+            "default": "Videos"
+          },
+          {
+            "type": "text",
+            "id": "section_title",
+            "label": "Section Title",
+            "default": "Web Master™ Dog Harness Videos"
+          },
+          {
+            "type": "image_picker",
+            "id": "video1_thumbnail",
+            "label": "Video 1 Thumbnail"
+          },
+          {
+            "type": "url",
+            "id": "video1_url",
+            "label": "Video 1 URL"
+          }, {
+            "type": "text",
+            "id": "video1_title",
+            "label": "Video 1 Title",
+            "default": "About the Web Master™ Dog Harness"
+          }, {
+            "type": "text",
+            "id": "video1_description",
+            "label": "Video 1 Description",
+            "default": "Learn more about the Web Master™ Dog Harness"
+          }, {
+            "type": "image_picker",
+            "id": "video2_thumbnail",
+            "label": "Video 2 Thumbnail"
+          }, {
+            "type": "url",
+            "id": "video2_url",
+            "label": "Video 2 URL"
+          }, {
+            "type": "text",
+            "id": "video2_title",
+            "label": "Video 2 Title",
+            "default": "The Original Ruffwear Harness, Redefined."
+          }, {
+            "type": "text",
+            "id": "video2_description",
+            "label": "Video 2 Description",
+            "default": "See how our partnerships with conservation detection dog teams helped inspire the next generation of our Web Master™ Harness in our latest film."
+          }, {
+            "type": "image_picker",
+            "id": "video3_thumbnail",
+            "label": "Video 3 Thumbnail"
+          }, {
+            "type": "url",
+            "id": "video3_url",
+            "label": "Video 3 URL"
+          }, {
+            "type": "text",
+            "id": "video3_title",
+            "label": "Video 3 Title"
+          }, {
+            "type": "text",
+            "id": "video3_description",
+            "label": "Video 3 Description"
+          }, {
+            "type": "image_picker",
+            "id": "video4_thumbnail",
+            "label": "Video 4 Thumbnail"
+          }, {
+            "type": "url",
+            "id": "video4_url",
+            "label": "Video 4 URL"
+          }, {
+            "type": "text",
+            "id": "video4_title",
+            "label": "Video 4 Title"
+          }, {
+            "type": "text",
+            "id": "video4_description",
+            "label": "Video 4 Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Tabs",
+        "blocks": [
+          {
+            "type": "details_tab"
+          }, {
+            "type": "features_tab"
+          }, {
+            "type": "materials_care_tab"
+          }, {
+            "type": "videos_tab"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<script>
+  // Update the existing script with these additions
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        // Remove active class from all buttons and contents
+        tabButtons.forEach((btn) => btn.classList.remove('active'));
+        tabContents.forEach((content) => content.classList.remove('active'));
+
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        // Show corresponding content
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Video modal functionality
+    const videoModal = document.getElementById('videoModal');
+    const videoIframe = document.getElementById('videoIframe');
+    const playButtons = document.querySelectorAll('.play-button');
+    const modalClose = document.querySelector('.video-modal__close');
+    const playlistItems = document.querySelectorAll('.video-modal__playlist-item');
+
+    function getYouTubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return match && match[2].length === 11 ? match[2] : null;
+    }
+
+    function openVideoModal(videoUrl) {
+      const videoId = getYouTubeId(videoUrl);
+      if (videoId) {
+        videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        videoModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    playButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        openVideoModal(button.getAttribute('href'));
+      });
+    });
+
+    playlistItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        openVideoModal(item.dataset.videoUrl);
+      });
+    });
+
+    modalClose.addEventListener('click', () => {
+      videoModal.style.display = 'none';
+      videoIframe.src = '';
+      document.body.style.overflow = '';
+    });
+
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) {
+        videoModal.style.display = 'none';
+        videoIframe.src = '';
+        document.body.style.overflow = '';
+      }
+    });
+  });
+</script>

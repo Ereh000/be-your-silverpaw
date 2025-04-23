@@ -1,27 +1,24 @@
-{% comment %}
-  Featured Collection Lists Section
-  - Displays collections in a tabbed interface
-  - Each tab is a separate block
-  - Collection cards have slider effect
+{% comment %} 
+      Featured Collection Lists Section
+      - Displays collections in a tabbed interface
+      - Each tab is a separate block
+      - Collection cards have slider effect
 {% endcomment %}
 
 <style>
-  .section-{{ section.id }}{
+  .section-{{ section.id }} {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  @media (max-width: 1010px){
+  @media (max-width: 1010px) {
     .section-{{ section.id }} {
-        padding-top: calc({{ section.settings.padding_top }}px / 2);
-        padding-bottom: calc({{ section.settings.padding_bottom }}px / 2);
+      padding-top: calc({{ section.settings.padding_top }}px / 2);
+      padding-bottom: calc({{ section.settings.padding_bottom }}px / 2);
     }
   }
 </style>
 
-<section
-  class="featured-collection-lists section-{{ section.id }}"
-  style=""
->
+<section class="featured-collection-lists section-{{ section.id }}" style="">
   <div class="page-width">
     {% if section.settings.title != blank %}
       <div class="section-header text-center">
@@ -35,14 +32,14 @@
           <button
             class="collection-tab-button{% if forloop.first %} active{% endif %}"
             data-tab-id="tab-{{ block.id }}"
-            {{ block.shopify_attributes }}
-          >
+            {{ block.shopify_attributes }}>
             {% if block.settings.icon != blank %}
               <img
                 src="{{ block.settings.icon | img_url: '50x' }}"
                 alt="{{ block.settings.tab_title }}"
                 class="tab-icon"
-              >
+                width=""
+                height="">
             {% endif %}
             <span>{{ block.settings.tab_title }}</span>
           </button>
@@ -50,10 +47,10 @@
       </div>
 
       {% comment %} {% if section.settings.description != blank %}
-        <div class="collection-description">
-          {{ section.settings.description }}
-        </div>
-      {% endif %} {% endcomment %} 
+                                <div class="collection-description">
+                                  {{ section.settings.description }}
+                                </div>
+                        {% endif %} {% endcomment %}
 
       <div class="collection-tab-wrapper">
         {% if section.settings.show_left_rigth_images == true %}
@@ -63,8 +60,7 @@
                 src="{{ section.settings.left_image | img_url: '400x400', crop: 'center' }}"
                 class="collection-left-image"
                 width=""
-                height=""
-              >
+                height="">
             </div>
           {% endif %}
         {% endif %}
@@ -91,8 +87,7 @@
                                   alt="{{ collection.title }}"
                                   class="collection-card-image"
                                   width=""
-                                  height=""
-                                >
+                                  height="">
                               {% else %}
                                 {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
                               {% endif %}
@@ -112,14 +107,34 @@
                   </div>
                   <div class="slider-controls">
                     <button class="slider-prev" aria-label="Previous">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M15 18L9 12L15 6"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round" />
                       </svg>
                     </button>
                     <div class="slider-dots"></div>
                     <button class="slider-next" aria-label="Next">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M9 6L15 12L9 18"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round" />
                       </svg>
                     </button>
                   </div>
@@ -139,8 +154,7 @@
                 src="{{ section.settings.right_image | img_url: '400x400', crop: 'center' }}"
                 class="collection-left-image"
                 width=""
-                height=""
-              >
+                height="">
             </div>
           {% endif %}
         {% endif %}
@@ -170,13 +184,11 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
+    margin: auto auto 4rem;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 10px;
     padding-bottom: 0;
     width: fit-content;
-    margin: auto;
-    margin-bottom: 4rem;
   }
 
   .collection-tab-button {
@@ -226,12 +238,25 @@
     position: relative;
     overflow: hidden;
     padding: 0 40px;
+    touch-action: none;
   }
 
   .collection-slider-track {
     display: flex;
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
     gap: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    touch-action: pan-y;
+    will-change: transform;
+  }
+
+  .collection-slider {
+    position: relative;
+    overflow: hidden;
+    padding: 0 40px;
+    touch-action: none;
   }
 
   .collection-card {
@@ -254,7 +279,7 @@
     aspect-ratio: 1 / 1;
   }
 
-  .collection-card-image-container .placeholder-svg{
+  .collection-card-image-container .placeholder-svg {
     width: 100%;
     height: 100%;
     background: #ccc;
@@ -335,20 +360,29 @@
     background-color: #000;
   }
 
-  .collection-tab-wrapper{
+  .collection-tab-wrapper {
     display: flex;
   }
 
-  .collection-left-image-wrapper{
-    margin: 0;
+  .collection-left-image-wrapper {
+    margin: -4rem 0 0;
+    /* width: 15rem; */
+    display: flex;
+    align-items: center;
   }
 
-  .collection-left-image-wrapper img{
-    width: 100%;
+  .collection-left-image-wrapper img {
+    width: 6rem;
   }
 
-  .collection-tab-wrapper .collection-right-image-wrapper{
+  .collection-tab-wrapper .collection-right-image-wrapper {
     margin-left: 4rem;
+  }
+
+  @media (max-width: 1010px) {
+    .collection-left-image-wrapper {
+      display: none;
+    }
   }
 
   @media screen and (max-width: 768px) {
@@ -363,14 +397,30 @@
 
   @media screen and (max-width: 480px) {
     .collection-card {
-      flex: 0 0 calc(100% - 20px);
+      flex: 0 0 calc(50% - 10px);
+      /* Changed from 100% to 50% for two columns */
     }
 
     .collection-tab-button {
       font-size: 14px;
       padding: 8px 12px;
     }
+
+    /* Adjust gap for smaller screens */
+    .collection-slider-track {
+      gap: 10px;
+    }  
+
+    /* Make card titles smaller on mobile */
+    .collection-card-title {
+      font-size: 14px;
+    }
   }
+  @media (max-width: 540px) {
+    .collection-tabs-container .collection-tabs {
+        justify-content: flex-start !important;
+    }
+}
 </style>
 
 <script>
@@ -378,45 +428,111 @@
     // Tab functionality
     const tabButtons = document.querySelectorAll('.collection-tab-button');
     const tabContents = document.querySelectorAll('.collection-tab-content');
-
+  
     tabButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const tabId = button.getAttribute('data-tab-id');
-
+  
         // Remove active class from all buttons and contents
         tabButtons.forEach((btn) => btn.classList.remove('active'));
         tabContents.forEach((content) => content.classList.remove('active'));
-
+  
         // Add active class to current button and content
         button.classList.add('active');
         document.getElementById(tabId).classList.add('active');
-
+  
         // Initialize slider for the active tab
         initializeSlider(document.getElementById(tabId));
       });
     });
-
+  
     // Initialize slider for each tab content
     function initializeSlider(tabContent) {
       if (!tabContent) return;
-
+  
       const slider = tabContent.querySelector('.collection-slider-track');
       const cards = tabContent.querySelectorAll('.collection-card');
       const prevButton = tabContent.querySelector('.slider-prev');
       const nextButton = tabContent.querySelector('.slider-next');
       const dotsContainer = tabContent.querySelector('.slider-dots');
-
+  
       if (!slider || cards.length === 0) return;
-
+  
+      let isDragging = false;
+      let startPos = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
       let currentIndex = 0;
       let cardWidth = cards[0].offsetWidth + 20; // Card width + gap
       let cardsPerView = Math.floor(slider.parentElement.offsetWidth / cardWidth);
       let maxIndex = Math.max(0, cards.length - cardsPerView);
-
+  
+      // Touch events
+      slider.addEventListener('touchstart', dragStart);
+      slider.addEventListener('touchend', dragEnd);
+      slider.addEventListener('touchmove', drag);
+  
+      // Mouse events
+      slider.addEventListener('mousedown', dragStart);
+      slider.addEventListener('mouseup', dragEnd);
+      slider.addEventListener('mouseleave', dragEnd);
+      slider.addEventListener('mousemove', drag);
+  
+      function dragStart(event) {
+        if (event.type === 'touchstart') {
+          startPos = event.touches[0].clientX;
+        } else {
+          startPos = event.clientX;
+          event.preventDefault();
+        }
+        isDragging = true;
+        slider.style.cursor = 'grabbing';
+      }
+  
+      function drag(event) {
+        if (isDragging) {
+          const currentPosition = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
+          const diff = currentPosition - startPos;
+          currentTranslate = prevTranslate + diff;
+          
+          // Add resistance at the edges
+          if (currentTranslate > 0) {
+            currentTranslate = currentTranslate / 3;
+          } else if (currentTranslate < -(maxIndex * cardWidth)) {
+            const overscroll = currentTranslate + (maxIndex * cardWidth);
+            currentTranslate = -(maxIndex * cardWidth) + (overscroll / 3);
+          }
+          
+          setSliderPosition();
+        }
+      }
+  
+      function dragEnd() {
+        isDragging = false;
+        slider.style.cursor = 'grab';
+        const movedBy = currentTranslate - prevTranslate;
+        
+        // Snap to closest card
+        if (Math.abs(movedBy) > cardWidth / 4) {
+          if (movedBy < 0) {
+            currentIndex = Math.min(maxIndex, Math.ceil(Math.abs(currentTranslate) / cardWidth));
+          } else {
+            currentIndex = Math.max(0, Math.floor(Math.abs(currentTranslate) / cardWidth));
+          }
+        }
+        
+        goToSlide(currentIndex);
+        prevTranslate = currentTranslate;
+      }
+  
+      function setSliderPosition() {
+        slider.style.transform = `translateX(${currentTranslate}px)`;
+      }
+  
       // Create dots
       dotsContainer.innerHTML = '';
       const totalDots = Math.ceil(cards.length / cardsPerView);
-
+  
       for (let i = 0; i < totalDots; i++) {
         const dot = document.createElement('span');
         dot.classList.add('slider-dot');
@@ -424,43 +540,50 @@
         dot.addEventListener('click', () => goToSlide(i * cardsPerView));
         dotsContainer.appendChild(dot);
       }
-
+  
       // Update dots
       function updateDots() {
         const activeDotIndex = Math.floor(currentIndex / cardsPerView);
         const dots = dotsContainer.querySelectorAll('.slider-dot');
-
         dots.forEach((dot, index) => {
           dot.classList.toggle('active', index === activeDotIndex);
         });
       }
-
+  
       // Go to specific slide
       function goToSlide(index) {
         currentIndex = Math.max(0, Math.min(index, maxIndex));
-        slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        currentTranslate = -(currentIndex * cardWidth);
+        prevTranslate = currentTranslate;
+        slider.style.transition = 'transform 0.3s ease-out';
+        setSliderPosition();
         updateDots();
+        
+        // Remove transition after animation
+        setTimeout(() => {
+          slider.style.transition = '';
+        }, 300);
       }
-
-      // Previous slide
+  
       prevButton.addEventListener('click', () => {
-        goToSlide(currentIndex - cardsPerView);
+        goToSlide(currentIndex - 1);
       });
-
-      // Next slide
+  
       nextButton.addEventListener('click', () => {
-        goToSlide(currentIndex + cardsPerView);
+        goToSlide(currentIndex + 1);
       });
-
-      // Handle window resize
+  
       window.addEventListener('resize', () => {
         cardWidth = cards[0].offsetWidth + 20;
         cardsPerView = Math.floor(slider.parentElement.offsetWidth / cardWidth);
         maxIndex = Math.max(0, cards.length - cardsPerView);
         goToSlide(0);
       });
+  
+      // Set initial grab cursor
+      slider.style.cursor = 'grab';
     }
-
+  
     // Initialize the first tab's slider
     if (tabContents.length > 0) {
       initializeSlider(tabContents[0]);
@@ -469,148 +592,141 @@
 </script>
 
 {% schema %}
-{
-  "name": "Featured Collection Lists",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Shop by Category"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "Description",
-      "default": "<p>Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll</p>"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_left_rigth_images",
-      "label": "Show Left and Right Images",
-      "default": true
-    },
-    {
-      "type": "image_picker",
-      "id": "left_image",
-      "label": "Left Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "right_image",
-      "label": "Right Image"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top Padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom Padding",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 60
-    }
-  ],
-  "blocks": [
-    {
-      "type": "collection_tab",
-      "name": "Collection Tab",
-      "settings": [
-        {
-          "type": "text",
-          "id": "tab_title",
-          "label": "Tab Title",
-          "default": "Walk"
-        },
-        {
-          "type": "text",
-          "id": "tab_description",
-          "label": "Tab Description",
-          "default": "Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll"
-        },
-        {
-          "type": "image_picker",
-          "id": "icon",
-          "label": "Tab Icon"
-        },
-        {
-          "type": "collection_list",
-          "id": "collections",
-          "label": "Collections",
-          "limit": 10
-        },
-        {
-          "type": "checkbox",
-          "id": "show_discount_badge",
-          "label": "Show Discount Badge",
-          "default": true
-        },
-        {
-          "type": "text",
-          "id": "discount_text",
-          "label": "Discount Text",
-          "default": "80% off"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Featured Collection Lists",
-      "blocks": [
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Walk",
-            "tab_description": "Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll"
+  {
+    "name": "Featured Collection Lists",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title",
+        "default": "Shop by Category"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p>Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll</p>"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_left_rigth_images",
+        "label": "Show Left and Right Images",
+        "default": true
+      }, {
+        "type": "image_picker",
+        "id": "left_image",
+        "label": "Left Image"
+      }, {
+        "type": "image_picker",
+        "id": "right_image",
+        "label": "Right Image"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top Padding",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "default": 60
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom Padding",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "default": 60
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_tab",
+        "name": "Collection Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Title",
+            "default": "Walk"
+          },
+          {
+            "type": "text",
+            "id": "tab_description",
+            "label": "Tab Description",
+            "default": "Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Tab Icon"
+          },
+          {
+            "type": "collection_list",
+            "id": "collections",
+            "label": "Collections",
+            "limit": 10
+          }, {
+            "type": "checkbox",
+            "id": "show_discount_badge",
+            "label": "Show Discount Badge",
+            "default": true
+          }, {
+            "type": "text",
+            "id": "discount_text",
+            "label": "Discount Text",
+            "default": "80% off"
           }
-        },
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Sleep",
-            "tab_description": "Sleeping accessories for a restful night"
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Collection Lists",
+        "blocks": [
+          {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "Walk",
+              "tab_description": "Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll"
+            }
+          },
+          {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "Sleep",
+              "tab_description": "Sleeping accessories for a restful night"
+            }
+          },
+          {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "Play",
+              "tab_description": "Play accessories for a fun-filled day"
+            }
+          },
+          {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "Treat",
+              "tab_description": "Treats for your pets"
+            }
+          }, {
+            "type": "collection_tab",
+            "settings": {
+              "tab_title": "Clean",
+              "tab_description": "Cleaning accessories for a clean and healthy environment"
+            }
           }
-        },
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Play",
-            "tab_description": "Play accessories for a fun-filled day"
-          }
-        },
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Treat",
-            "tab_description": "Treats for your pets"
-          }
-        },
-        {
-          "type": "collection_tab",
-          "settings": {
-            "tab_title": "Clean",
-            "tab_description": "Cleaning accessories for a clean and healthy environment"
-          }
-        }
-      ]
-    }
-  ]
-}
+        ]
+      }
+    ]
+  }
 {% endschema %}

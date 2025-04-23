@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "name": "t:sections.footer-group.name",
   "type": "footer",
   "sections": {
@@ -58,7 +58,6 @@
         "menu_9G6TK7",
         "newsletter_A7reKG"
       ],
-      "name": "Footer v2",
       "settings": {
         "padding_top": 60,
         "padding_bottom": 60,

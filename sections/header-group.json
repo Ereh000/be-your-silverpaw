@@ -38,8 +38,8 @@
         "background_color": "#000000",
         "text_color": "#ffffff",
         "color_scheme": "accent-1",
-        "show_social_icons": true,
-        "show_country_selector": true,
+        "show_social_icons": false,
+        "show_country_selector": false,
         "font_size": 14,
         "font_size_mobile": 12,
         "font_weight": "400",
@@ -55,6 +55,30 @@
     },
     "header_v2_TpHt8Y": {
       "type": "header-v2",
+      "blocks": {
+        "mega_menu_xeq68Y": {
+          "type": "mega_menu",
+          "settings": {
+            "mega_menu_title": "Walk",
+            "menu_heading": "Shop All Categories",
+            "mega_menu_image": "shopify://shop_images/image_3085.png",
+            "mega_menu_image_link": "",
+            "mega_menu_image_heading": "Featured Product",
+            "mega_menu_image_text": "Check out our latest products",
+            "mega_menu_show_badge": true,
+            "mega_menu_badge_text": "Best Seller",
+            "mega_menu_image2": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-13.webp",
+            "mega_menu_image_link2": "",
+            "mega_menu_image_heading2": "Featured Product 2",
+            "mega_menu_image_text2": "Check out our latest products 2",
+            "mega_menu_show_badge2": true,
+            "mega_menu_badge_text2": "Best Seller 2"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_xeq68Y"
+      ],
       "settings": {
         "logo": "shopify://shop_images/b753ab1671557f8bd3825d10a78824e8.png",
         "logo_width": 120,
@@ -163,7 +187,6 @@
     },
     "popup_v2_MNwUem": {
       "type": "popup-v2",
-      "name": "Newsletter Popup v2",
       "settings": {
         "logo": "shopify://shop_images/26cad81328298123be5f022ab38a0b21.gif",
         "image": "shopify://shop_images/image_3085.png",
@@ -173,9 +196,9 @@
         "email_placeholder": "Enter your email",
         "button_text": "Subscribe",
         "show_social_icons": true,
-        "show_once_per_session": false,
+        "show_once_per_session": true,
         "show_on_exit": false,
-        "delay": 0
+        "delay": 5
       }
     }
   },
@@ -187,4 +210,4 @@
     "popup_v2_MNwUem"
   ]
 }
-  
+ 

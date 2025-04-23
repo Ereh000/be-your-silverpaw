@@ -1,3 +1,5 @@
+{% comment %} {{ 'main-product-v2.css' | asset_url | stylesheet_tag }} {% endcomment %}
+
 <section class="main-product-v2">
   <div class="product-container">
     <div class="product-breadcrumb">
@@ -40,10 +42,40 @@
 
           {%- when 'product_description_short' -%}
             <div class="product__short-description" {{ block.shopify_attributes }}>
-              <p>
-                {{ block.settings.short_description | default: product.description | strip_html | truncatewords: 20 }}
+              {% if block.settings.short_description != blank %}
+                <p>
+                {{ block.settings.short_description }}
               </p>
+              {% else %}   
+              <p> 
+                {{ product.description | strip_html | truncatewords: 20 }}  
+              </p>
+              {% endif %}
             </div>
+            <div class="" style="display: flex; align-items: center; justify-content: space-between;">
+          {%- when '@app' -%}  
+              {% render block %}
+          {%- when 'price' -%}
+              <div class="product-price">
+                <span class="current-price{% if product.compare_at_price > product.price %} sale-price{% endif %}">
+                  {{ product.price | money }}
+                </span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="compare-price">{{ product.compare_at_price | money }}</span>
+                  <span class="save-badge">
+                    Save
+                    {{   
+                      product.compare_at_price
+                      | minus: product.price
+                      | times: 100.0
+                      | divided_by: product.compare_at_price
+                      | round
+                    -}}
+                    %
+                  </span>
+                {% endif %}
+              </div>
+              </div>
         {%- endcase -%}
       {% endfor %}
     </div>
@@ -178,10 +210,16 @@
 
             {%- when 'product_description_short' -%}
               <div class="product__short-description" {{ block.shopify_attributes }}>
+              {% if block.settings.short_description != blank %}
                 <p>
-                  {{ block.settings.short_description | default: product.description | strip_html | truncatewords: 20 }}
-                </p>
-              </div>
+                {{ block.settings.short_description }}
+              </p>   
+              {% else %}   
+              <p> 
+                {{ product.description | strip_html | truncatewords: 20 }}    
+              </p>
+              {% endif %}
+            </div>
 
             {%- when 'rating' -%}
               <div class="product-rating">
@@ -535,236 +573,13 @@
                   </div>
                 {%- endif -%}
               </div>
-
-            {% when '@app' %}
-              {% render block %}
           {%- endcase -%}
         {% endfor %}
-      </div>
+      </div>  
     </div>
   </div>
 </section>
 
-<style>
-  .main-product-v2 .type-bullet-paginaton{
-    background: #000;
-    width: 5px;
-    display: block;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    cursor: pointer;
-    display: block !important;
-  }
-  .main-product-v2 .type-bullet-paginaton.active{
-    background: #000;
-    width: 40px;
-    height: 5px;
-    border-radius: 3px;
-  }
-
-  .main-product-v2 .product-media-thumbnails.mobile {
-    display: none;
-  }
-
-  .main-product-v2 .product-info-mobile{
-    display: none;
-  }
-
-  /* Add smooth transitions for all slides */
-  .main-product-v2 .product-media-slide {
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    opacity: 0;
-    display: none;
-  }
-
-  .main-product-v2 .product-media-slide.active {
-    opacity: 1;
-    display: block;
-  }
-  .main-product-v2 .product-media-slide:last-child {
-    margin-right: 0;
-    width: 100% !important;
-  }
-
-  @media screen and (max-width: 768px) {
-    /* Mobile product media carousel with peek effect and smooth animations */
-    .main-product-v2 .product-media-main {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-    }
-
-    .main-product-v2 .product-media-slide {
-      position: relative;
-      width: 90%; /* Make active slide take 90% of width */
-      display: none;
-      margin-right: auto;
-      opacity: 0;
-      transform: translateX(20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .main-product-v2 .product-media-slide.active {
-      display: block;
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .main-product-v2 .product-media-slide.active + .product-media-slide {
-      display: block;
-      position: absolute;
-      top: 0;
-      right: -10%;
-      width: 20%; /* Show 10% of next slide */
-      opacity: 0.7;
-      transform: translateX(0);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .main-product-v2 .product-media-thumbnails.mobile {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    {% if section.settings.mobile_pagination %}
-      .main-product-v2 .product-media-thumbnails:not(.mobile) {
-        display: none;
-      }
-    {% endif %}
-  }
-
-
-  /* Slider arrow styles */
-  .main-product-v2 .slider-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    transition: opacity 0.3s ease, background 0.3s ease;
-  }
-
-  .main-product-v2 .product-media-main:hover .slider-arrow {
-    opacity: 1;
-  }
-
-  .main-product-v2 .slider-arrow:hover {
-    /* background: rgba(255, 255, 255, 0.95); */
-  }
-
-  .main-product-v2 .prev-arrow {
-    left: 10px;
-  }
-
-  .main-product-v2 .next-arrow {
-    right: 10px;
-  }
-
-  .main-product-v2 .slider-arrow svg {
-    width: 20px;
-    height: 20px;
-    color: #333;
-  }
-
-  @media screen and (max-width: 768px) {
-    .main-product-v2 .slider-arrow {
-      width: 32px;
-      height: 32px;
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .main-product-v2 .prev-arrow {
-      left: 5px;
-    }
-
-    .main-product-v2 .next-arrow {
-      right: 5px;
-    }
-
-    .main-product-v2 .slider-arrow svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  /* Make sure mobile pagination bullets are visible */
-  @media screen and (max-width: 768px) {
-    .main-product-v2 .product-media-thumbnails.mobile .type-bullet-paginaton {
-      width: 6px;
-      height: 6px;
-      background: #ccc;
-      transition: width 0.3s ease, background 0.3s ease;
-    }
-
-    .main-product-v2 .type-pagination-trigger.buttel-pagination.active .type-bullet-paginaton {
-        background: #000;
-        width: 24px;
-        height: 6px;
-        border-radius: 3px;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .main-product-v2 .product-info-mobile {
-      display: block;
-      margin-bottom: 1.5rem;
-    }
-
-    .main-product-v2 .product-info-column .product__brand,
-    .main-product-v2 .product-info-column .product-title,
-    .main-product-v2 .product-info-column .product__short-description {
-      display: none;
-    }
-
-    .main-product-v2 .product-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>  
-
-<style>
-  @media (min-width: 768px) {
-    .main-product-v2 .product-media-carousel {
-      display: flex;
-      gap: 1rem;
-      flex-direction: row-reverse;
-      width: 100%;
-      align-items: flex-start;
-    }
-    .main-product-v2 .product-media-thumbnails {
-      flex-direction: column;
-    }
-  }
-
-  /* Add these styles for the accordion icon animation */
-  .main-product-v2 .accordion-icon {
-    transition: transform 0.3s ease;
-  }
-
-  .main-product-v2 .accordion-header svg{
-    background-color: transparent !important;
-    border-radius: 0px !important;
-    width: 10px !important;
-    height: 10px !important;
-  }
-  
-  .main-product-v2 .accordion-header[aria-expanded="true"] svg {
-    transform: rotate(180deg) !important;
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -1061,6 +876,105 @@
             // Success - update cart count and show confirmation
             this.updateCartCount();
             this.showAddedToCartMessage();
+        
+            // Open the cart drawer and refresh its contents
+            if (window.cartDrawer && typeof window.cartDrawer.openDrawer === 'function') {
+              // First fetch updated cart data
+              fetch('/?section_id=cart-drawer')
+                .then(response => response.text())
+                .then(html => { 
+                  // Extract the cart drawer HTML from the response
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(html, 'text/html');
+                  const newCartDrawer = doc.getElementById('CartDrawer');
+                  
+                  // Update the existing cart drawer content
+                  const currentCartDrawer = document.getElementById('CartDrawer');
+                  if (currentCartDrawer && newCartDrawer) {
+                    currentCartDrawer.innerHTML = newCartDrawer.innerHTML;
+                    
+                    // Rebind all cart drawer events
+                    const drawer = document.getElementById('CartDrawer');
+                    
+                    // Bind quantity buttons
+                    drawer.querySelectorAll('.cart-drawer-v2__qty-btn').forEach((button) => {
+                      if (button.classList.contains('decrease')) {
+                        button.addEventListener('click', () => {
+                          const input = button.nextElementSibling;
+                          const currentValue = parseInt(input.value);
+                          if (currentValue > 1) {
+                            input.value = currentValue - 1;
+                            window.cartDrawer.updateItemQuantity(input.dataset.itemKey, currentValue - 1);
+                          }
+                        });
+                      } else if (button.classList.contains('increase')) {
+                        button.addEventListener('click', () => {
+                          const input = button.previousElementSibling;
+                          const currentValue = parseInt(input.value);
+                          input.value = currentValue + 1;
+                          window.cartDrawer.updateItemQuantity(input.dataset.itemKey, currentValue + 1);
+                        });
+                      }
+                    });
+
+                    // Bind quantity inputs
+                    drawer.querySelectorAll('.cart-drawer-v2__qty-input').forEach((input) => {
+                      input.addEventListener('change', (e) => {
+                        const newValue = parseInt(e.target.value);
+                        if (newValue >= 0) {
+                          window.cartDrawer.updateItemQuantity(input.dataset.itemKey, newValue);
+                        }
+                      });
+                    });
+
+                    // Bind remove buttons
+                    drawer.querySelectorAll('.cart-drawer-v2__item-remove').forEach((button) => {
+                      button.addEventListener('click', () => {
+                        window.cartDrawer.updateItemQuantity(button.dataset.itemKey, 0);
+                      });
+                    });
+
+                    // Bind note popup events
+                    const noteButton = drawer.querySelector('.cart-drawer-v2__note-button');
+                    const noteCloseButton = drawer.querySelector('.cart-drawer-v2__note-close');
+                    const noteApplyButton = drawer.querySelector('.cart-drawer-v2__note-apply');
+
+                    if (noteButton) {
+                      noteButton.addEventListener('click', () => {
+                        drawer.querySelector('.cart-drawer-v2__note-popup').classList.add('active');
+                      });
+                    }
+                    if (noteCloseButton) {
+                      noteCloseButton.addEventListener('click', () => {
+                        drawer.querySelector('.cart-drawer-v2__note-popup').classList.remove('active');
+                      });
+                    }
+                    if (noteApplyButton) {
+                      noteApplyButton.addEventListener('click', () => {
+                        const noteText = drawer.querySelector('.cart-drawer-v2__note-textarea').value;
+                        window.cartDrawer.updateCartNote(noteText);
+                      });
+                    }
+
+                    // Fix the close drawer button binding
+                    const closeDrawerButton = drawer.querySelector('.cart-drawer-v2__close');
+                    if (closeDrawerButton) {
+                      closeDrawerButton.addEventListener('click', () => {
+                        if (window.cartDrawer && typeof window.cartDrawer.closeDrawer === 'function') {
+                          window.cartDrawer.closeDrawer();
+                        }
+                      });  
+                    }
+                  }  
+                  
+                  // Now open the drawer with updated content
+                  window.cartDrawer.openDrawer();
+                })
+                .catch(err => {
+                  console.error('Error updating cart drawer:', err);
+                  window.cartDrawer.openDrawer();
+                });
+            }
           })
           .catch((error) => {
             // Error handling
@@ -1070,7 +984,7 @@
           .finally(() => {
             // Reset button state
             this.submitButton.classList.remove('loading');
-            this.submitButton.disabled = false;
+            this.submitButton.disabled = false;  
           });
       }
 
@@ -1156,6 +1070,249 @@
     });
   });
 </script>
+
+<style>
+  .main-product-v2 .type-bullet-paginaton{
+    background: #000;
+    width: 5px;
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    cursor: pointer;
+    display: block !important;
+  }
+  .main-product-v2 .type-bullet-paginaton.active{
+    background: #000;
+    width: 40px;
+    height: 5px;
+    border-radius: 3px;
+  }
+
+  .main-product-v2 .product-media-thumbnails.mobile {
+    display: none;
+  }
+
+  .main-product-v2 .product-info-mobile{
+    display: none;
+  }
+
+  /* Add smooth transitions for all slides */
+  .main-product-v2 .product-media-slide {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 0;
+    display: none;
+  }
+
+  .main-product-v2 .product-media-slide.active {
+    opacity: 1;
+    display: block;
+  }
+  .main-product-v2 .product-media-slide:last-child {
+    margin-right: 0;
+    width: 100% !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Mobile product media carousel with peek effect and smooth animations */
+    .main-product-v2 .product-media-main {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .main-product-v2 .product-media-slide {
+      position: relative;
+      width: 90%; /* Make active slide take 90% of width */
+      display: none;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .main-product-v2 .product-media-slide.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .main-product-v2 .product-media-slide.active + .product-media-slide {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -10%;
+      width: 20%; /* Show 10% of next slide */
+      opacity: 0.7;
+      transform: translateX(0);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .main-product-v2 .product-media-thumbnails.mobile {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    {% if section.settings.mobile_pagination %}
+      .main-product-v2 .product-media-thumbnails:not(.mobile) {
+        display: none;
+      }
+    {% endif %}
+  }
+
+
+  /* Slider arrow styles */
+  .main-product-v2 .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.3s ease, background 0.3s ease;
+  }
+
+  .main-product-v2 .product-media-main:hover .slider-arrow {
+    opacity: 1;
+  }
+
+  .main-product-v2 .slider-arrow:hover {
+    /* background: rgba(255, 255, 255, 0.95); */
+  }
+
+  .main-product-v2 .prev-arrow {
+    left: 10px;
+  }
+
+  .main-product-v2 .next-arrow {
+    right: 10px;
+  }
+
+  .main-product-v2 .slider-arrow svg {
+    width: 20px;
+    height: 20px;
+    color: #333;
+  }
+
+  .main-product-v2 .product__short-description p{
+    overflow-wrap: break-word;
+  }
+
+  /* star rating block styles */
+  .yotpo-sr-bottom-line-button .yotpo-sr-bottom-line-text, .yotpo-sr-bottom-line-button .yotpo-sr-bottom-line-score{
+    font-size: 14px !important;
+  }
+  /* .yotpo-widget-clear, .yotpo-widget-clear button, .yotpo-widget-clear form input, .yotpo-widget-clear span svg{
+    width: 10px !important;
+  } */
+
+  @media screen and (max-width: 768px) {  
+    .main-product-v2 .slider-arrow {
+      width: 32px;
+      height: 32px;
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .main-product-v2 .prev-arrow {
+      left: 5px;
+    }
+
+    .main-product-v2 .next-arrow {
+      right: 5px;
+    }
+
+    .main-product-v2 .slider-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  /* Make sure mobile pagination bullets are visible */
+  @media screen and (max-width: 768px) {
+    .main-product-v2 .product-media-thumbnails.mobile .type-bullet-paginaton {
+      width: 6px;
+      height: 6px;
+      background: #ccc;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .main-product-v2 .type-pagination-trigger.buttel-pagination.active .type-bullet-paginaton {
+        background: #000;
+        width: 24px;
+        height: 6px;
+        border-radius: 3px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .main-product-v2 .product-info-mobile {
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    .main-product-v2 .product-info-column .product__brand,
+    .main-product-v2 .product-info-column .product-title,
+    .main-product-v2 .product-info-column .product__short-description, 
+    .main-product-v2  .product-info-column .product-price
+    .main-product-v2  .product-info-column .shopify-block.shopify-app-block
+    {
+      display: none;
+    }
+
+    .main-product-v2 .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 400px){
+    .main-product-v2 .save-badge{
+      display: none!important;
+    }
+  }
+</style>  
+
+<style>
+  @media (min-width: 768px) {
+    .main-product-v2 .product-media-carousel {
+      display: flex;
+      gap: 1rem;
+      flex-direction: row-reverse;
+      width: 100%;
+      align-items: flex-start;
+    }
+    .main-product-v2 .product-media-thumbnails {
+      flex-direction: column;
+    }
+  }
+
+  /* Add these styles for the accordion icon animation */
+  .main-product-v2 .accordion-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .main-product-v2 .accordion-header svg{
+    background-color: transparent !important;
+    border-radius: 0px !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  
+  .main-product-v2 .accordion-header[aria-expanded="true"] svg {
+    transform: rotate(180deg) !important;
+  }
+</style>
+
 
 <style>
   /* Toast notification styles */
@@ -1288,6 +1445,11 @@
       display: none;
     }
 
+    .main-product-v2  .product-info-column .product-price,
+    .main-product-v2  .product-info-column .shopify-block.shopify-app-block{  
+      display: none !important;
+    }
+
     .main-product-v2 .product-grid {
       grid-template-columns: 1fr;
     }
@@ -1361,7 +1523,6 @@
     {
       "type": "breadcrumb",
       "name": "Breadcrumb",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1374,7 +1535,6 @@
     {
       "type": "brand",
       "name": "Brand",
-      "limit": 1,
       "settings": [
         {
           "type": "select",
@@ -1427,7 +1587,6 @@
     {
       "type": "title",
       "name": "Product Title",
-      "limit": 1,
       "settings": [
         {
           "type": "select",
@@ -1454,12 +1613,11 @@
     {
       "type": "product_description_short",
       "name": "Short Description",
-      "limit": 1,
       "settings": [
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "short_description",
-          "label": "Short description",
+          "label": "Short description", 
           "info": "If left blank, will use truncated product description"
         }
       ]
@@ -1467,7 +1625,6 @@
     {
       "type": "rating",
       "name": "Product Rating",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1480,7 +1637,6 @@
     {
       "type": "price",
       "name": "Product Price",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1499,7 +1655,6 @@
     {
       "type": "product_features",
       "name": "Product Features",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -1530,7 +1685,6 @@
     {
       "type": "product_badges",
       "name": "Product Badges",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1560,7 +1714,6 @@
     {
       "type": "shipping_info",
       "name": "Shipping Information",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1603,7 +1756,6 @@
     {
       "type": "variant_picker",
       "name": "Variant Picker",
-      "limit": 1,
       "settings": [
         {
           "type": "checkbox",
@@ -1616,7 +1768,6 @@
     {
       "type": "quantity_selector",
       "name": "Quantity Selector",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -1629,7 +1780,6 @@
     {
       "type": "buy_buttons",
       "name": "Buy Buttons",
-      "limit": 1,
       "settings": [
         {
           "type": "text",
@@ -1655,7 +1805,6 @@
     {
       "type": "product_accordion",
       "name": "Product Accordion",
-      "limit": 1,
       "settings": [
         {
           "type": "text",

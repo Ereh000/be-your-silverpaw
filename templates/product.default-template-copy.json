@@ -100,16 +100,16 @@
         "padding_bottom": 36
       }
     },
-    "main_product_v2_ERFGBU": {
+    "main_product_v2_kyMLt6": {
       "type": "main-product-v2",
       "blocks": {
-        "breadcrumb_naT86L": {
+        "breadcrumb_kLErXT": {
           "type": "breadcrumb",
           "settings": {
             "show_breadcrumb": true
           }
         },
-        "brand_yWa3a3": {
+        "brand_XmjTWV": {
           "type": "brand",
           "disabled": true,
           "settings": {
@@ -119,44 +119,32 @@
             "brand_link": ""
           }
         },
-        "title_U9mEcQ": {
+        "title_DYXdGi": {
           "type": "title",
           "settings": {
             "title_size": "medium"
           }
         },
-        "product_description_short_L3B6i4": {
+        "product_description_short_6U8VVC": {
           "type": "product_description_short",
           "settings": {
             "short_description": ""
           }
         },
-        "yotpo_product_reviews_star_rating_xpaUXw": {
-          "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-          "settings": {
-            "product": "{{product}}"
-          }
-        },
-        "judge_me_reviews_preview_badge_kU3Y3y": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "disabled": true,
-          "settings": {}
-        },
-        "rating_NqHPCH": {
+        "rating_eDV7tc": {
           "type": "rating",
-          "disabled": true,
           "settings": {
             "show_empty_rating": false
           }
         },
-        "price_XX9gxW": {
+        "price_HbeYwd": {
           "type": "price",
           "settings": {
             "show_compare_price": true,
             "show_save_amount": true
           }
         },
-        "product_badges_fkViYB": {
+        "product_badges_gQLXDi": {
           "type": "product_badges",
           "settings": {
             "show_bestseller": true,
@@ -165,7 +153,7 @@
             "custom_badge_text": ""
           }
         },
-        "product_features_UYDRJW": {
+        "product_features_7d37FB": {
           "type": "product_features",
           "settings": {
             "feature_1": "Effective training",
@@ -174,13 +162,7 @@
             "feature_4": "Made with quality fabric"
           }
         },
-        "variant_picker_4qiYAG": {
-          "type": "variant_picker",
-          "settings": {
-            "show_size_chart": true
-          }
-        },
-        "buy_buttons_nJgkPa": {
+        "buy_buttons_WNFWdA": {
           "type": "buy_buttons",
           "settings": {
             "add_to_cart_text": "Add To Cart",
@@ -188,7 +170,7 @@
             "show_dynamic_checkout": false
           }
         },
-        "shipping_info_GRG9by": {
+        "shipping_info_cRWVEL": {
           "type": "shipping_info",
           "settings": {
             "show_free_shipping": true,
@@ -199,7 +181,7 @@
             "shipping_time_text": "Ships in 1-2 days"
           }
         },
-        "product_accordion_rYChNV": {
+        "product_accordion_wAr3VT": {
           "type": "product_accordion",
           "settings": {
             "accordion_top_text": "Enjoy stress-free walks with the Cesar Millan-Nylon Leash, perfect for guiding your furry friend and strengthening your bond.",
@@ -213,102 +195,44 @@
         }
       },
       "block_order": [
-        "breadcrumb_naT86L",
-        "brand_yWa3a3",
-        "title_U9mEcQ",
-        "product_description_short_L3B6i4",
-        "yotpo_product_reviews_star_rating_xpaUXw",
-        "judge_me_reviews_preview_badge_kU3Y3y",
-        "rating_NqHPCH",
-        "price_XX9gxW",
-        "product_badges_fkViYB",
-        "product_features_UYDRJW",
-        "variant_picker_4qiYAG",
-        "buy_buttons_nJgkPa",
-        "shipping_info_GRG9by",
-        "product_accordion_rYChNV"
+        "breadcrumb_kLErXT",
+        "brand_XmjTWV",
+        "title_DYXdGi",
+        "product_description_short_6U8VVC",
+        "rating_eDV7tc",
+        "price_HbeYwd",
+        "product_badges_gQLXDi",
+        "product_features_7d37FB",
+        "buy_buttons_WNFWdA",
+        "shipping_info_cRWVEL",
+        "product_accordion_wAr3VT"
       ],
       "settings": {
         "show_pagination": true,
         "pagination_style": "image",
-        "mobile_pagination": true,
+        "mobile_pagination": false,
         "pagination_bg_color": "#f5f5f5",
         "pagination_text_color": "#000000"
       }
     },
-    "product_tabs_YKhmBG": {
-      "type": "product-tabs",
+    "17449063065277700c": {
+      "type": "apps",
       "blocks": {
-        "details_tab_gwwQrc": {
-          "type": "details_tab",
+        "yotpo_product_reviews_reviews_j4btqM": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
           "settings": {
-            "tab_title": "Details",
-            "content_paragraph_1": "<p>The Web Master™ has been the trusted harness of avalanche rescue teams, service dog handlers, and conservation teams since its introduction as Ruffwear's first harness. Proven over two decades in the fi</p>{{ product.metafields.custom.product_details | metafield_tag }}<p>eld, it carries on a legacy of delivering durability and comfort without restricting movement – now with a front leash attachment point and a neck buckle to eliminate the over-the-head on/off experience for head-shy dogs.</p>",
-            "content_paragraph_2": "<p>The reinforced handle offers balanced lift and assist support for navigating technical terrain, while a perforated foam back panel provides breathable structure without adding bulk. Four points of adjustment means you can dial in a secure and comfortable fit for a wide range of body shapes. Rugged, reliable, and ready for your next adventure.</p>",
-            "learn_more_text": "Learn more",
-            "learn_more_description": "about how our partnerships with working dog teams help shape our gear.",
-            "learn_more_link": ""
-          }
-        },
-        "features_tab_WCfWGq": {
-          "type": "features_tab",
-          "settings": {
-            "tab_title": "Features",
-            "feature_image": "shopify://shop_images/30104_WebMasterHarness_KeyFeatures_ThreeStrapStyle.webp",
-            "feature_title": "THREE-STRAP STYLE HARNESS",
-            "feature_description": "Three-strap style harness – great for houdini dogs",
-            "feature_image2": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-42.webp",
-            "feature_title2": "NECK BUCKLE",
-            "feature_description2": "Three-strap style harness – great for houdini dogs",
-            "feature_image3": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-13.webp",
-            "feature_title3": "BREATHABLE PERFORATED FOAM",
-            "feature_description3": "Three-strap style harness – great for houdini dogs",
-            "feature_title4": "",
-            "feature_description4": "Three-strap style harness – great for houdini dogs"
-          }
-        },
-        "materials_care_tab_yJF8hd": {
-          "type": "materials_care_tab",
-          "settings": {
-            "tab_title": "Materials & Care",
-            "materials_title": "MATERIALS",
-            "materials_list": "<ul><li>Shell (bluesign® approved): 150D polyester ripstop with DWR and PU coating<br/></li><li>Padding: PE foam<br/></li><li>Lining (bluesign® approved): polyester knit mesh<br/></li><li>Webbing: polypropylene<br/></li><li>Buckles (bluesign® approved): ITW Nexus Airloc side-release<br/></li><li>Leash Connection Point: anodized 6061-T6 aluminum V-ring<br/>Made in Vietnam</li></ul>",
-            "care_title": "CARE",
-            "care_list": "Hand wash\nMild detergent\nAir dry"
-          }
-        },
-        "videos_tab_N49R8m": {
-          "type": "videos_tab",
-          "settings": {
-            "tab_title": "Videos",
-            "section_title": "Web Master™ Dog Harness Videos",
-            "video1_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-34.webp",
-            "video1_url": "https://youtu.be/X5ucspJC_aE",
-            "video1_title": "About the Web Master™ Dog Harness",
-            "video1_description": "Learn more about the Web Master™ Dog Harness",
-            "video2_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-34.webp",
-            "video2_url": "https://youtu.be/X5ucspJC_aE",
-            "video2_title": "The Original Ruffwear Harness, Redefined.",
-            "video2_description": "See how our partnerships with conservation detection dog teams helped inspire the next generation of our Web Master™ Harness in our latest film.",
-            "video3_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-42.webp",
-            "video3_url": "https://youtu.be/X5ucspJC_aE",
-            "video3_title": "The Original Ruffwear Harness, Redefined.",
-            "video3_description": "",
-            "video4_thumbnail": "shopify://shop_images/30104_WebMasterHarness_KeyFeatures_ThreeStrapStyle.webp",
-            "video4_url": "https://youtu.be/X5ucspJC_aE",
-            "video4_title": "The Original Ruffwear Harness, Redefined.",
-            "video4_description": ""
+            "product": "{{product}}"
           }
         }
       },
       "block_order": [
-        "details_tab_gwwQrc",
-        "features_tab_WCfWGq",
-        "materials_care_tab_yJF8hd",
-        "videos_tab_N49R8m"
+        "yotpo_product_reviews_reviews_j4btqM"
       ],
       "settings": {
-        "background_color": "#05223f"
+        "include_margins": true,
+        "show_divider": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "scrolling-promotion": {
@@ -494,7 +418,6 @@
     },
     "product-recommendations": {
       "type": "product-recommendations",
-      "disabled": true,
       "settings": {
         "product_list_limit": 4,
         "show_divider": false,
@@ -564,245 +487,17 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "recently-viewed-products": {
-      "type": "recently-viewed-products",
-      "disabled": true,
-      "settings": {
-        "show_divider": false,
-        "heading": "Recently Viewed",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "heading_tag": "h2",
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "image_ratio": "portrait",
-        "image_position": "center center",
-        "enable_image_fill": true,
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_rating": true,
-        "show_quick_buy": true,
-        "enable_quick_view": true,
-        "enable_color_swatches": true,
-        "enable_countdown": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial-0": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5",
-            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
-            "author": "Author's name"
-          }
-        },
-        "testimonial-1": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5",
-            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
-            "author": "Author's name"
-          }
-        },
-        "testimonial-2": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5",
-            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
-            "author": "Author's name"
-          }
-        },
-        "testimonial-3": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5",
-            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
-            "author": "Author's name"
-          }
-        },
-        "testimonial-4": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "5",
-            "text": "<p>Add customer reviews and testimonials to showcase your store's happy customers.</p>",
-            "author": "Author's name"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial-0",
-        "testimonial-1",
-        "testimonial-2",
-        "testimonial-3",
-        "testimonial-4"
-      ],
-      "disabled": true,
-      "settings": {
-        "autorotate": false,
-        "autorotate_speed": 5,
-        "hide_images": false,
-        "show_divider": false,
-        "heading": "Testimonials",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "heading_tag": "h2",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "rich-text": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Express yourself with",
-            "heading_size": "h1",
-            "heading_tag": "h2"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>#instagram</p>",
-            "text_size": "typeset2",
-            "secondary_color": true,
-            "highlight_phrases": "",
-            "highlight_style": "marker"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "disabled": true,
-      "settings": {
-        "text_alignment": "center",
-        "mobile_text_alignment": "center",
-        "horizontal_content": false,
-        "narrow": false,
-        "show_divider": false,
-        "use_custom_colors": false,
-        "colors_button_label": "#ffffff",
-        "colors_button_background": "#1a1b18",
-        "colors_text": "#212326",
-        "colors_background": "#ffffff",
-        "colors_highlight": "#bbff00",
-        "gradient_background": "",
-        "padding_top": 36,
-        "padding_bottom": 28
-      }
-    },
-    "gallery": {
-      "type": "gallery",
-      "blocks": {
-        "image-0": {
-          "type": "image",
-          "settings": {
-            "image_position": "center center",
-            "subheading": "",
-            "subheading_size": "h5",
-            "heading": "",
-            "heading_size": "h3",
-            "link": "",
-            "text_box_position": "middle-center"
-          }
-        },
-        "image-1": {
-          "type": "image",
-          "settings": {
-            "image_position": "center center",
-            "subheading": "",
-            "subheading_size": "h4",
-            "heading": "",
-            "heading_size": "h3",
-            "link": "",
-            "text_box_position": "middle-center"
-          }
-        },
-        "image-2": {
-          "type": "image",
-          "settings": {
-            "image_position": "center center",
-            "subheading": "",
-            "subheading_size": "h5",
-            "heading": "#summerMe",
-            "heading_size": "h3",
-            "link": "",
-            "text_box_position": "middle-center"
-          }
-        },
-        "image-3": {
-          "type": "image",
-          "settings": {
-            "image_position": "center center",
-            "subheading": "",
-            "subheading_size": "h5",
-            "heading": "",
-            "heading_size": "h3",
-            "link": "",
-            "text_box_position": "middle-center"
-          }
-        },
-        "image-4": {
-          "type": "image",
-          "settings": {
-            "image_position": "center center",
-            "subheading": "",
-            "subheading_size": "h5",
-            "heading": "",
-            "heading_size": "h3",
-            "link": "",
-            "text_box_position": "middle-center"
-          }
-        }
-      },
-      "block_order": [
-        "image-0",
-        "image-1",
-        "image-2",
-        "image-3",
-        "image-4"
-      ],
-      "disabled": true,
-      "settings": {
-        "per_row": 5,
-        "spacing_images": 4,
-        "image_height": 280,
-        "apply_overlay": true,
-        "full_width": false,
-        "show_divider": false,
-        "heading": "",
-        "heading_size": "h1",
-        "heading_alignment": "left",
-        "heading_tag": "h2",
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "mobile_image_height": 160,
-        "padding_top": 0,
-        "padding_bottom": 4
-      }
     }
   },
   "order": [
     "empty-space",
     "main_product_TjaXnp",
-    "main_product_v2_ERFGBU",
-    "product_tabs_YKhmBG",
+    "main_product_v2_kyMLt6",
+    "17449063065277700c",
     "scrolling-promotion",
     "image_with_text_overlay_9icVeM",
     "gallery_pe7x3k",
     "product-recommendations",
-    "collapsible-content",
-    "recently-viewed-products",
-    "testimonials",
-    "rich-text",
-    "gallery"
+    "collapsible-content"
   ]
 }

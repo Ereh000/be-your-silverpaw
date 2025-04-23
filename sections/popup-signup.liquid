@@ -1,0 +1,478 @@
+{% comment %}
+  Popup Signup Form
+  - Displays a popup with customer signup form
+  - Handles form submission via AJAX
+{% endcomment %}
+
+<div id="popup-signup" class="popup-signup" style="display: none;">
+  <div class="popup-signup__container">
+    <button class="popup-signup__close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L15 15M1 15L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="popup-signup__content">
+      <div class="popup-signup__header">
+        {% if section.settings.logo != blank %}
+          <div class="popup-signup__logo">
+            <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" width="80" height="">
+          </div>
+        {% endif %}
+        <h2 class="popup-signup__heading">{{ section.settings.heading }}</h2>
+        <p class="popup-signup__text">{{ section.settings.text }}</p>
+      </div>
+
+      <div class="popup-signup__form-container">
+        <div id="signup-form" class="popup-signup__form">
+          <div class="popup-signup__form-field">
+            <label for="signup-first-name" class="popup-signup__label">First Name</label>
+            <input
+              type="text"
+              id="signup-first-name"
+              class="popup-signup__input"
+              placeholder="Enter your first name"
+              required
+            >
+          </div>
+          
+          <div class="popup-signup__form-field">
+            <label for="signup-last-name" class="popup-signup__label">Last Name</label>
+            <input
+              type="text"
+              id="signup-last-name"
+              class="popup-signup__input"
+              placeholder="Enter your last name"
+              required
+            >
+          </div>
+          
+          <div class="popup-signup__form-field">
+            <label for="signup-email" class="popup-signup__label">Email</label>
+            <input
+              type="email"
+              id="signup-email"
+              class="popup-signup__input"
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+          
+          <div class="popup-signup__form-field">
+            <label for="signup-password" class="popup-signup__label">Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              class="popup-signup__input"
+              placeholder="Create a password"
+              required
+            >
+          </div>
+          
+          <div class="popup-signup__error" id="signup-error" style="display: none;"></div>
+          
+          <button type="button" id="signup-submit" class="popup-signup__submit">
+            {{ section.settings.button_text }}
+          </button>
+        </div>
+        
+        <div id="signup-success" class="popup-signup__success" style="display: none;">
+          <p class="popup-signup__success-text">{{ section.settings.success_message }}</p>
+          <a href="{{ routes.account_url }}" class="popup-signup__account-btn">Go to My Account</a>
+        </div>
+      </div>
+      
+      <div class="popup-signup__footer">
+        <p class="popup-signup__login-text">Already have an account? <a href="{{ routes.account_login_url }}" class="popup-signup__login-link">Login</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .popup-signup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .popup-signup.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-signup__container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup-signup__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    color: #000;
+    padding: 5px;
+  }
+
+  .popup-signup__content {
+    padding: 40px;
+  }
+
+  .popup-signup__header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .popup-signup__logo {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .popup-signup__logo img {
+    height: 60px;
+    width: auto;
+  }
+
+  .popup-signup__heading {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    color: #000;
+  }
+
+  .popup-signup__text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .popup-signup__form-container {
+    margin-bottom: 20px;
+  }
+
+  .popup-signup__form-field {
+    margin-bottom: 15px;
+  }
+
+  .popup-signup__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .popup-signup__input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .popup-signup__input:focus {
+    border-color: #000;
+    outline: none;
+  }
+
+  .popup-signup__error {
+    color: #e53935;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .popup-signup__submit {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
+  .popup-signup__submit:hover {
+    background-color: #333;
+  }
+
+  .popup-signup__success {
+    text-align: center;
+  }
+
+  .popup-signup__success-text {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #28a745;
+    font-weight: 500;
+  }
+
+  .popup-signup__account-btn {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+  }
+
+  .popup-signup__account-btn:hover {
+    background-color: #333;
+  }
+
+  .popup-signup__footer {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .popup-signup__login-text {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .popup-signup__login-link {
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .popup-signup__login-link:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 767px) {
+    .popup-signup__container {
+      max-width: 90%;
+      margin: 0 15px;
+    }
+    
+    .popup-signup__content {
+      padding: 30px 20px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .popup-signup__heading {
+      font-size: 20px;
+    }
+    
+    .popup-signup__text {
+      font-size: 14px;
+    }
+    
+    .popup-signup__input {
+      font-size: 14px;
+      padding: 10px;
+    }
+    
+    .popup-signup__submit {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('popup-signup');
+    const closeButton = popup.querySelector('.popup-signup__close');
+    const signupForm = document.getElementById('signup-form');
+    const signupSuccess = document.getElementById('signup-success');
+    const signupError = document.getElementById('signup-error');
+    const submitButton = document.getElementById('signup-submit');
+    
+    // Function to show popup
+    function showPopup() {
+      popup.style.display = 'flex';
+      setTimeout(() => {
+        popup.classList.add('active');
+      }, 10);
+    }
+
+    // Function to hide popup
+    function hidePopup() {
+      popup.classList.remove('active');
+      setTimeout(() => {
+        popup.style.display = 'none';
+        
+        // Reset form after hiding
+        if (signupSuccess.style.display === 'block') {
+          setTimeout(() => {
+            signupForm.style.display = 'block';
+            signupSuccess.style.display = 'none';
+            signupError.style.display = 'none';
+            document.getElementById('signup-first-name').value = '';
+            document.getElementById('signup-last-name').value = '';
+            document.getElementById('signup-email').value = '';
+            document.getElementById('signup-password').value = '';
+          }, 300);
+        }
+      }, 300);
+    }
+
+    // Handle form submission
+    if (submitButton) {
+      submitButton.addEventListener('click', async function() {
+        const firstName = document.getElementById('signup-first-name').value;
+        const lastName = document.getElementById('signup-last-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        
+        // Basic validation
+        if (!firstName || !lastName || !email || !password) {
+          signupError.textContent = 'Please fill in all fields';
+          signupError.style.display = 'block';
+          return;
+        }
+        
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+          signupError.textContent = 'Please enter a valid email address';
+          signupError.style.display = 'block';
+          return;
+        }
+        
+        if (password.length < 5) {
+          signupError.textContent = 'Password must be at least 5 characters';
+          signupError.style.display = 'block';
+          return;
+        }
+        
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Creating account...';
+        signupError.style.display = 'none';
+        
+        try {
+          // Create the customer account
+          const formData = new FormData();
+          formData.append('form_type', 'create_customer');
+          formData.append('utf8', '✓');
+          formData.append('customer[first_name]', firstName);
+          formData.append('customer[last_name]', lastName);
+          formData.append('customer[email]', email);
+          formData.append('customer[password]', password);
+          
+          const response = await fetch('/account', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const responseText = await response.text();
+          
+          // Check if there was an error (Shopify returns 200 even for errors, but includes error messages)
+          if (responseText.includes('class="errors"') || !response.url.includes('/account')) {
+            // Extract error message
+            const errorMatch = responseText.match(/<li[^>]*>(.*?)<\/li>/);
+            const errorMessage = errorMatch ? errorMatch[1] : 'An error occurred. Please try again.';
+            
+            signupError.textContent = errorMessage;
+            signupError.style.display = 'block';
+            submitButton.disabled = false;
+            submitButton.textContent = '{{ section.settings.button_text }}';
+          } else {
+            // Success - show success message
+            signupForm.style.display = 'none';
+            signupSuccess.style.display = 'block';
+            
+            // Auto-close after delay (optional)
+            // setTimeout(hidePopup, 3000);
+          }
+        } catch (error) {
+          console.error('Error creating account:', error);
+          signupError.textContent = 'An error occurred. Please try again.';
+          signupError.style.display = 'block';
+          submitButton.disabled = false;
+          submitButton.textContent = '{{ section.settings.button_text }}';
+        }
+      });
+    }
+
+    // Close popup when clicking the close button
+    closeButton.addEventListener('click', hidePopup);
+
+    // Close popup when clicking outside the popup content
+    popup.addEventListener('click', function(e) {
+      if (e.target === popup) {
+        hidePopup();
+      }
+    });
+    
+    // Example trigger for showing the popup
+    // You can use this with a button click or other event
+    // document.querySelector('.show-signup-popup').addEventListener('click', showPopup);
+    
+    // For testing - show popup after delay
+    // setTimeout(showPopup, 2000);
+  });
+</script>
+  
+{% schema %}
+{
+  "name": "Popup Signup Form",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Create an Account"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Sign up to get access to exclusive offers and track your orders."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Create Account"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Your account has been created successfully!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popup Signup Form"
+    }
+  ]
+}
+{% endschema %}

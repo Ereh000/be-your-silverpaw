@@ -7,144 +7,43 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-{
+ {
   "sections": {
-    "empty-space": {
-      "type": "empty-space",
-      "disabled": true,
-      "settings": {
-        "desktop_height": 36,
-        "mobile_height": 16
-      }
-    },
-    "main_product_TjaXnp": {
-      "type": "main-product",
-      "blocks": {
-        "brand_aVUJWx": {
-          "type": "brand",
-          "settings": {}
-        },
-        "breadcrumb_4VUAmE": {
-          "type": "breadcrumb",
-          "settings": {
-            "text_style": "body",
-            "show_divider": false
-          }
-        },
-        "title_YWf3fd": {
-          "type": "title",
-          "settings": {
-            "title_size": "medium",
-            "show_price": false,
-            "price_size": "medium"
-          }
-        },
-        "yotpo_product_reviews_star_rating_yPPhEp": {
-          "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
-          "settings": {
-            "product": "{{product}}"
-          }
-        },
-        "price_DxGqAG": {
-          "type": "price",
-          "settings": {
-            "price_size": "medium",
-            "show_badges": true,
-            "sale_badge_basis": "auto"
-          }
-        },
-        "variant_picker_F4My74": {
-          "type": "variant_picker",
-          "settings": {
-            "show_variant_labels": true,
-            "picker_type": "button",
-            "swatch_source": "variant",
-            "swatch_type": "round",
-            "enable_swatch_unavailable_click": false,
-            "size_chart": ""
-          }
-        },
-        "buy_buttons_QDncge": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_quantity_selector": true,
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": false
-          }
-        }
-      },
-      "block_order": [
-        "brand_aVUJWx",
-        "breadcrumb_4VUAmE",
-        "title_YWf3fd",
-        "yotpo_product_reviews_star_rating_yPPhEp",
-        "price_DxGqAG",
-        "variant_picker_F4My74",
-        "buy_buttons_QDncge"
-      ],
-      "disabled": true,
-      "settings": {
-        "enable_sticky_info": true,
-        "media_position": "left",
-        "media_size": "large",
-        "gallery_layout": "stacked",
-        "image_ratio": "adapt_first",
-        "show_featured_media": false,
-        "show_thumbnails": true,
-        "hide_variants": false,
-        "enable_image_zoom": true,
-        "enable_video_looping": false,
-        "mobile_image_ratio": "adapt_first",
-        "show_mobile_thumbnails": true,
-        "padding_top": 0,
-        "padding_bottom": 36
-      }
-    },
-    "main_product_v2_kyMLt6": {
+    "main_product_v2_ERFGBU": {
       "type": "main-product-v2",
       "blocks": {
-        "breadcrumb_kLErXT": {
+        "breadcrumb_naT86L": {
           "type": "breadcrumb",
           "settings": {
             "show_breadcrumb": true
           }
         },
-        "brand_XmjTWV": {
-          "type": "brand",
-          "disabled": true,
-          "settings": {
-            "text_style": "body",
-            "use_image": false,
-            "image_width": 100,
-            "brand_link": ""
-          }
-        },
-        "title_DYXdGi": {
+        "title_U9mEcQ": {
           "type": "title",
           "settings": {
             "title_size": "medium"
           }
         },
-        "product_description_short_6U8VVC": {
+        "product_description_short_L3B6i4": {
           "type": "product_description_short",
           "settings": {
             "short_description": ""
           }
         },
-        "rating_eDV7tc": {
-          "type": "rating",
+        "yotpo_product_reviews_star_rating_D7DjRg": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/star-rating/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
           "settings": {
-            "show_empty_rating": false
+            "product": "{{product}}"
           }
         },
-        "price_HbeYwd": {
+        "price_XX9gxW": {
           "type": "price",
           "settings": {
             "show_compare_price": true,
             "show_save_amount": true
           }
         },
-        "product_badges_gQLXDi": {
+        "product_badges_fkViYB": {
           "type": "product_badges",
           "settings": {
             "show_bestseller": true,
@@ -153,16 +52,22 @@
             "custom_badge_text": ""
           }
         },
-        "product_features_7d37FB": {
+        "product_features_UYDRJW": {
           "type": "product_features",
           "settings": {
-            "feature_1": "Effective training",
-            "feature_2": "Long lasting durability",
-            "feature_3": "Optimal control",
-            "feature_4": "Made with quality fabric"
+            "feature_1": "{{ product.metafields.custom.features_checkbox_1.value }}",
+            "feature_2": "{{ product.metafields.custom.features_checkbox_2.value }}",
+            "feature_3": "{{ product.metafields.custom.features_checkbox_3.value }}",
+            "feature_4": "{{ product.metafields.custom.features_checkbox_4.value }}"
           }
         },
-        "buy_buttons_WNFWdA": {
+        "variant_picker_4qiYAG": {
+          "type": "variant_picker",
+          "settings": {
+            "show_size_chart": true
+          }
+        },
+        "buy_buttons_nJgkPa": {
           "type": "buy_buttons",
           "settings": {
             "add_to_cart_text": "Add To Cart",
@@ -170,7 +75,7 @@
             "show_dynamic_checkout": false
           }
         },
-        "shipping_info_cRWVEL": {
+        "shipping_info_GRG9by": {
           "type": "shipping_info",
           "settings": {
             "show_free_shipping": true,
@@ -183,137 +88,97 @@
         }
       },
       "block_order": [
-        "breadcrumb_kLErXT",
-        "brand_XmjTWV",
-        "title_DYXdGi",
-        "product_description_short_6U8VVC",
-        "rating_eDV7tc",
-        "price_HbeYwd",
-        "product_badges_gQLXDi",
-        "product_features_7d37FB",
-        "buy_buttons_WNFWdA",
-        "shipping_info_cRWVEL"
+        "breadcrumb_naT86L",
+        "title_U9mEcQ",
+        "product_description_short_L3B6i4",
+        "yotpo_product_reviews_star_rating_D7DjRg",
+        "price_XX9gxW",
+        "product_badges_fkViYB",
+        "product_features_UYDRJW",
+        "variant_picker_4qiYAG",
+        "buy_buttons_nJgkPa",
+        "shipping_info_GRG9by"
       ],
-      "name": "Main Product v2",
       "settings": {
         "show_pagination": true,
         "pagination_style": "image",
-        "mobile_pagination": false,
+        "mobile_pagination": true,
         "pagination_bg_color": "#f5f5f5",
         "pagination_text_color": "#000000"
       }
     },
-    "scrolling-promotion": {
-      "type": "scrolling-promotion",
+    "product_tabs_YKhmBG": {
+      "type": "product-tabs",
       "blocks": {
-        "announcement-0": {
-          "type": "announcement",
+        "details_tab_gwwQrc": {
+          "type": "details_tab",
           "settings": {
-            "icon": "none",
-            "icon_size": "medium",
-            "custom_icon": "",
-            "text": "FREE SHIPPING on all orders over $100",
-            "text_size": 16,
-            "link": ""
+            "enable_prodcut_description": true,
+            "tab_title": "Details",
+            "content_paragraph_1": "<p>{{ product.metafields.custom.product_details | metafield_tag }}</p>",
+            "content_paragraph_2": "",
+            "learn_more_text": "",
+            "learn_more_description": "",
+            "learn_more_link": ""
           }
         },
-        "announcement-1": {
-          "type": "announcement",
+        "materials_care_tab_yJF8hd": {
+          "type": "materials_care_tab",
           "settings": {
-            "icon": "none",
-            "icon_size": "medium",
-            "custom_icon": "",
-            "text": "EASY RETURNS 30-day postage paid returns",
-            "text_size": 16,
-            "link": ""
+            "tab_title": "Materials & Care",
+            "materials_title": "MATERIALS",
+            "materials_list": "<ul><li>Shell (bluesign® approved): 150D polyester ripstop with DWR and PU coating<br/></li><li>Padding: PE foam<br/></li><li>Lining (bluesign® approved): polyester knit mesh<br/></li><li>Webbing: polypropylene<br/></li><li>Buckles (bluesign® approved): ITW Nexus Airloc side-release<br/></li><li>Leash Connection Point: anodized 6061-T6 aluminum V-ring<br/>Made in Vietnam</li></ul>",
+            "care_title": "CARE",
+            "care_list": "Hand wash\nMild detergent\nAir dry"
           }
         },
-        "announcement-3": {
-          "type": "announcement",
-          "settings": {
-            "icon": "none",
-            "icon_size": "medium",
-            "custom_icon": "",
-            "text": "10% OFF your first order | Use code: FIRST10",
-            "text_size": 16,
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement-0",
-        "announcement-1",
-        "announcement-3"
-      ],
-      "disabled": true,
-      "settings": {
-        "direction": "left",
-        "speed": 1.6,
-        "show_divider": false,
-        "use_custom_colors": true,
-        "colors_icon": "#f1ff34",
-        "colors_text": "#212326",
-        "colors_background": "#f2f2f2",
-        "gradient_background": "",
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
-    },
-    "image_with_text_overlay_9icVeM": {
-      "type": "image-with-text-overlay",
-      "blocks": {
-        "heading_f4qRGt": {
-          "type": "heading",
-          "settings": {
-            "heading": "Key Features",
-            "heading_size": "h1",
-            "heading_tag": "h2"
-          }
-        },
-        "text_Pp9JW7": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.metafields.custom.product_key_features | metafield_tag }}",
-            "text_size": "typeset2",
-            "secondary_color": false
-          }
-        },
-        "button_8cyqJ4": {
-          "type": "button",
+        "features_tab_zfBTf3": {
+          "type": "features_tab",
           "disabled": true,
           "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_size": "medium",
-            "button_style_secondary": false
+            "tab_title": "Features",
+            "feature_title": "THREE-STRAP STYLE HARNESS",
+            "feature_description": "Three-strap style harness – great for houdini dogs",
+            "feature_title2": "THREE-STRAP STYLE HARNESS",
+            "feature_description2": "Three-strap style harness – great for houdini dogs",
+            "feature_title3": "THREE-STRAP STYLE HARNESS",
+            "feature_description3": "Three-strap style harness – great for houdini dogs",
+            "feature_title4": "THREE-STRAP STYLE HARNESS",
+            "feature_description4": "Three-strap style harness – great for houdini dogs"
+          }
+        },
+        "videos_tab_N49R8m": {
+          "type": "videos_tab",
+          "settings": {
+            "tab_title": "Videos",
+            "section_title": "Web Master™ Dog Harness Videos",
+            "video1_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-34.webp",
+            "video1_url": "https://youtube.com/shorts/XBnOi6sqWZQ?si=oIrIktqLW0PXMoBl",
+            "video1_title": "About the Web Master™ Dog Harness",
+            "video1_description": "Learn more about the Web Master™ Dog Harness",
+            "video2_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-34.webp",
+            "video2_url": "https://youtu.be/X5ucspJC_aE",
+            "video2_title": "The Original Ruffwear Harness, Redefined.",
+            "video2_description": "See how our partnerships with conservation detection dog teams helped inspire the next generation of our Web Master™ Harness in our latest film.",
+            "video3_thumbnail": "shopify://shop_images/Web_JPG-30104_Web-Master-Harness_Blaze-Orange_Fly-Fishing-42.webp",
+            "video3_url": "https://youtu.be/X5ucspJC_aE",
+            "video3_title": "The Original Ruffwear Harness, Redefined.",
+            "video3_description": "",
+            "video4_thumbnail": "shopify://shop_images/30104_WebMasterHarness_KeyFeatures_ThreeStrapStyle.webp",
+            "video4_url": "https://youtu.be/X5ucspJC_aE",
+            "video4_title": "The Original Ruffwear Harness, Redefined.",
+            "video4_description": ""
           }
         }
       },
       "block_order": [
-        "heading_f4qRGt",
-        "text_Pp9JW7",
-        "button_8cyqJ4"
+        "details_tab_gwwQrc",
+        "materials_care_tab_yJF8hd",
+        "features_tab_zfBTf3",
+        "videos_tab_N49R8m"
       ],
       "settings": {
-        "image": "shopify://shop_images/Snapinst.app_357720521_17990305817314581_3147463375609561716_n_1080.jpg",
-        "image_position": "center center",
-        "text_box_position": "flex-start",
-        "text_alignment": "left",
-        "image_ratio": "650px",
-        "full_width": true,
-        "show_divider": false,
-        "image_behavior": "none",
-        "mobile_text_box_position": "image_first",
-        "mobile_text_alignment": "center",
-        "mobile_image_ratio": "auto",
-        "video_url": "",
-        "colors_button_label": "#ffffff",
-        "colors_button_background": "#1a1b18",
-        "colors_text": "#212326",
-        "colors_overlay": "#f3f3f3",
-        "colors_overlay_opacity": 92,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "background_color": "#05223f"
       }
     },
     "gallery_pe7x3k": {
@@ -364,6 +229,7 @@
         "image_f6REYB",
         "image_XEKkG3"
       ],
+      "disabled": true,
       "settings": {
         "per_row": 3,
         "spacing_images": 2,
@@ -407,6 +273,129 @@
         "padding_bottom": 36
       }
     },
+    "scrolling-promotion": {
+      "type": "scrolling-promotion",
+      "blocks": {
+        "announcement-0": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "LEASHES",
+            "text_size": 16,
+            "link": ""
+          }
+        },
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "COLLARS",
+            "text_size": 16,
+            "link": ""
+          }
+        },
+        "announcement-3": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "HARNESSES",
+            "text_size": 16,
+            "link": ""
+          }
+        },
+        "announcement_AFbFKk": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "SWEATERS",
+            "text_size": 20,
+            "link": ""
+          }
+        },
+        "announcement_DdUyQm": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "JACKETS",
+            "text_size": 16,
+            "link": ""
+          }
+        },
+        "announcement_iJL4Ah": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "DOG TOYS",
+            "text_size": 20,
+            "link": ""
+          }
+        },
+        "announcement_qYJP8V": {
+          "type": "announcement",
+          "settings": {
+            "icon": "none",
+            "icon_size": "medium",
+            "custom_icon": "",
+            "text": "COSTUMES",
+            "text_size": 20,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement-0",
+        "announcement-1",
+        "announcement-3",
+        "announcement_AFbFKk",
+        "announcement_DdUyQm",
+        "announcement_iJL4Ah",
+        "announcement_qYJP8V"
+      ],
+      "settings": {
+        "direction": "left",
+        "speed": 1.6,
+        "show_divider": false,
+        "use_custom_colors": true,
+        "colors_icon": "#f1ff34",
+        "colors_text": "#f3f3f3",
+        "colors_background": "#212326",
+        "gradient_background": "",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "17449681977b82f56a": {
+      "type": "apps",
+      "blocks": {
+        "yotpo_product_reviews_reviews_a9C8PL": {
+          "type": "shopify://apps/yotpo-product-reviews/blocks/reviews/eb7dfd7d-db44-4334-bc49-c893b51b36cf",
+          "settings": {
+            "product": "{{product}}"
+          }
+        }
+      },
+      "block_order": [
+        "yotpo_product_reviews_reviews_a9C8PL"
+      ],
+      "settings": {
+        "include_margins": true,
+        "show_divider": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collapsible-content": {
       "type": "collapsible-content",
       "blocks": {
@@ -440,7 +429,6 @@
         "question-1",
         "question-2"
       ],
-      "disabled": true,
       "settings": {
         "open_first_collapsible_row": false,
         "narrow": true,
@@ -450,19 +438,41 @@
         "heading_alignment": "left",
         "heading_tag": "h2",
         "enable_faq_schema": false,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "17449920984eb071c5": {
+      "type": "apps",
+      "blocks": {
+        "kiwi_size_chart_recommender_kiwi_sizing_RhD98C": {
+          "type": "shopify://apps/kiwi-size-chart-recommender/blocks/kiwiSizing/b7369922-bf15-44ce-a121-a22a8fcbc4b0",
+          "settings": {
+            "product": "{{product}}",
+            "waitForElementSelector": "",
+            "waitForElementDelay": 5
+          }
+        }
+      },
+      "block_order": [
+        "kiwi_size_chart_recommender_kiwi_sizing_RhD98C"
+      ],
+      "settings": {
+        "include_margins": true,
+        "show_divider": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
     }
   },
   "order": [
-    "empty-space",
-    "main_product_TjaXnp",
-    "main_product_v2_kyMLt6",
-    "scrolling-promotion",
-    "image_with_text_overlay_9icVeM",
-    "gallery_pe7x3k",
+    "main_product_v2_ERFGBU",
+    "product_tabs_YKhmBG",
+    "gallery_pe7x3k",  
     "product-recommendations",
-    "collapsible-content"
+    "scrolling-promotion",
+    "17449681977b82f56a",
+    "collapsible-content",
+    "17449920984eb071c5"
   ]
 }

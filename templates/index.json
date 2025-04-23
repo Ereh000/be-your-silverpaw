@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "slideshow_v2_mAKGVd": {
       "type": "slideshow-v2",
@@ -21,7 +21,9 @@
             "text": "<p><strong>Looking for pet accessories that won't chew through your savings? You've just sniffed out the ultimate treasure trove.</strong></p>",
             "button_label": "Shop now",
             "button_link": "",
-            "text_alignment": "left"
+            "text_alignment": "left",
+            "show_badge": true,
+            "badge_image": "shopify://shop_images/OBJECTS_a3410c05-1511-4430-b5c7-c64383bf0d4b.png"
           }
         },
         "slide_tPMLRt": {
@@ -34,7 +36,8 @@
             "text": "",
             "button_label": "",
             "button_link": "",
-            "text_alignment": "center"
+            "text_alignment": "center",
+            "show_badge": false
           }
         }
       },
@@ -72,7 +75,9 @@
               "collars",
               "harnesses",
               "leashes",
-              "dogs"
+              "jackets",
+              "sweaters",
+              "boots"
             ],
             "show_discount_badge": true,
             "discount_text": "80% off"
@@ -99,14 +104,12 @@
           "type": "collection_tab",
           "settings": {
             "tab_title": "Play",
-            "tab_description": "Play accessories for a fun-filled day",
+            "tab_description": "Playtime Just Got a Whole Lot Cheaper (and Cuter)",
             "icon": "shopify://shop_images/Mask_group_2.png",
             "collections": [
-              "dogs",
-              "frontpage",
-              "leashes",
-              "clean",
-              "play"
+              "dog-toys",
+              "cat-toys",
+              "costumes"
             ],
             "show_discount_badge": true,
             "discount_text": "80% off"
@@ -116,14 +119,12 @@
           "type": "collection_tab",
           "settings": {
             "tab_title": "Treat",
-            "tab_description": "Treats for your pets",
+            "tab_description": "Snack Time, Anytime – Treat Your Pet (and Your Wallet)!",
             "icon": "shopify://shop_images/Mask_group_3.png",
             "collections": [
-              "collars",
-              "dogs",
-              "harnesses",
-              "frontpage",
-              "leashes"
+              "dog-treats",
+              "bowls",
+              "water-dispensers"
             ],
             "show_discount_badge": true,
             "discount_text": "80% off"
@@ -133,14 +134,12 @@
           "type": "collection_tab",
           "settings": {
             "tab_title": "Clean",
-            "tab_description": "Cleaning accessories for a clean and healthy environment",
+            "tab_description": "Mess? What Mess? (Oh Right, We’ve Got That Covered)",
             "icon": "shopify://shop_images/Mask_group_4.png",
             "collections": [
-              "leashes",
-              "collars",
-              "play",
-              "sleep",
-              "walk"
+              "poop-bags",
+              "training-pads",
+              "wipes"
             ],
             "show_discount_badge": false,
             "discount_text": "80% off"
@@ -154,7 +153,6 @@
         "collection_tab_KxmgK6",
         "collection_tab_GEGxKH"
       ],
-      "name": "Featured Collection Lists",
       "settings": {
         "title": "Shop by Category",
         "description": "<p>Leashes, collars, harnesses, sweaters, jackets, and boots for every stylish stroll</p>",
@@ -168,7 +166,6 @@
     },
     "image_banner_v2_JALJBU": {
       "type": "image-banner-v2",
-      "name": "Image Banner v2",
       "settings": {
         "image": "shopify://shop_images/image_3097.png",
         "banner_height": 700,
@@ -189,6 +186,7 @@
         "content_background": "#ffffff",
         "content_border_color": "#e0e0e0",
         "content_width": 700,
+        "enable_popup": true,
         "padding_top": 0,
         "padding_bottom": 0
       }
@@ -251,7 +249,7 @@
         "image": "shopify://shop_images/image_3107.png",
         "button_label": "Shop now",
         "button_link": "",
-        "background_color": "#e6fff5",
+        "background_color": "#d9fff2",
         "heading_color": "#000000",
         "text_color": "#333333",
         "button_background": "#ffffff",
@@ -331,7 +329,6 @@
         "slide_nNhK3V",
         "slide_4zrjGk"
       ],
-      "name": "Featured Collection v3",
       "settings": {
         "title": "Make Life with Your Dog Look as Good as It Feels",
         "description": "<p>Capture the joy, love, and everyday moments with your furry best friend—through thoughtfully designed products that reflect your bond.</p>",
@@ -398,7 +395,6 @@
         "feature_NDHCcg",
         "feature_3CzKp7"
       ],
-      "name": "Image with Features v2",
       "settings": {
         "heading": "Why Join the Club?",
         "main_image": "shopify://shop_images/image_3112.png",
@@ -478,13 +474,29 @@
         "faq_QcNFxp",
         "faq_EJ7dDP"
       ],
-      "name": "FAQs v2",
       "settings": {
         "title": "Frequently asked questions",
         "subtext": "<p>Of course! Here's a well-structured FAQ section for your homepage, with a<br/>friendly headline, a helpful subtext, and clear, trust-building FAQs</p>",
         "background_color": "#f9f9f9",
         "padding_top": 60,
         "padding_bottom": 60
+      }
+    },
+    "image_with_text_v2_izXgLC": {
+      "type": "image-with-text-v2",
+      "settings": {
+        "heading": "Don't Miss Out!",
+        "text": "<p>Join DollarWoofClub now to unlock the best deals in the pet game and treat your furry friend like the royalty they are — without spending like one.</p>",
+        "button_label": "Sign Up & Start Saving",
+        "button_link": "#",
+        "image": "shopify://shop_images/dog-delivery-8opUI8z12f.png",
+        "image_position": "right",
+        "background_color": "#5baa91",
+        "heading_color": "#ffffff",
+        "text_color": "#ffffff",
+        "button_background_color": "#ffffff",
+        "button_text_color": "#5baa91",
+        "mobile_layout": "column-reverse"
       }
     },
     "icon_with_text_CNNaGa": {
@@ -529,7 +541,6 @@
         "icon_text_p4z4pV",
         "icon_text_c93A7a"
       ],
-      "name": "Icon with Text",
       "settings": {
         "title": "",
         "layout": "grid",
@@ -553,7 +564,7 @@
     "featured_collection_slider_MjzG78",
     "image_with_feature_v2_TyR8WJ",
     "faqs_J6tMdp",
+    "image_with_text_v2_izXgLC",
     "icon_with_text_CNNaGa"
   ]
 }
-  
